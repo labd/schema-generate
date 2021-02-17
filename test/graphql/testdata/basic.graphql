@@ -1,0 +1,13 @@
+type A {
+  a: String!
+  b: String
+  c: [String!]!
+  d: [String!]
+  e: Float!
+}
+type B {
+  a: A!
+  b: A
+  c: [A!]!
+  d: [A!]
+}

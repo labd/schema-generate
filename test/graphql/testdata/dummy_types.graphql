@@ -1,0 +1,5 @@
+type A {
+  a: ID!
+  b: Int!
+  c: Float!
+}

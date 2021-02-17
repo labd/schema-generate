@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/information-page-schema.json",
+  "schemaId": "https://schema-examples.com/information-page",
+  "validationLevel": "SLOT"
+}

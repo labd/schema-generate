@@ -1,0 +1,10 @@
+union Union = A | B
+type A {
+  a: String!
+}
+type B {
+  b: String!
+}
+type C {
+  c: Union!
+}

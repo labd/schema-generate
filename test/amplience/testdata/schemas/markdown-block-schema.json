@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema-examples.com/markdown-block",
+  "title": "Markdown block",
+  "description": "A block with markdown text",
+  "type": "object",
+  "properties": {
+    "_meta": { "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/meta" },
+    "content": {
+      "title": "Markdown content",
+      "type": "string",
+      "format": "markdown"
+    }
+  },
+  "required": ["_meta", "content"]
+}
