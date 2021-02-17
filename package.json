@@ -16,17 +16,9 @@
     "url": "https://github.com/korsvanloon/schema-generate"
   },
   "scripts": {
-    "start": "tsdx watch",
     "build": "tsc -p tsconfig.json",
     "test": "jest",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
     "schema-generate": "NODE_PATH=./src node -r ts-node/register src/cli.ts"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
   },
   "dependencies": {
     "commander": "^7.0.0",
@@ -43,13 +35,10 @@
     "@typescript-eslint/eslint-plugin": "4.13.0",
     "@typescript-eslint/parser": "4.13.0",
     "babel-loader": "^8.1.0",
-    "clsx": "^1.1.1",
     "eslint": "7.16.0",
-    "husky": "^4.3.0",
     "jest": "^26.6.3",
     "msw": "^0.21.3",
     "ts-jest": "^26.4.3",
-    "tsdx": "^0.14.1",
     "tslib": "^2.0.3"
   }
 }
