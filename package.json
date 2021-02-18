@@ -1,12 +1,11 @@
 {
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "name": "schema-generate",
   "author": "Kors van Loon",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist/amplience",
-    "dist/graphql"
+    "dist"
   ],
   "bin": "dist/cli.js",
   "engines": {
