@@ -3,12 +3,13 @@ import fs from 'fs'
 import { generateGraphqlTypes } from './graphql'
 import { Command } from 'commander'
 import { generateJson } from './amplience'
+import config from '../package.json'
 
 const logOrWrite = (result: string, outputFile?: string) =>
   outputFile ? fs.writeFileSync(outputFile, result) : console.log(result)
 
 const program = new Command()
-program.version('0.0.1')
+program.version(config.version)
 
 program
   .command('graphql <inputFiles...>')

@@ -17,6 +17,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
+    "resolveJsonModule": true,
     "target": "ESNext"
   }
 }
