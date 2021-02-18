@@ -5,7 +5,8 @@
   "author": "Kors van Loon",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist/amplience",
+    "dist/graphql"
   ],
   "bin": "dist/cli.js",
   "engines": {
