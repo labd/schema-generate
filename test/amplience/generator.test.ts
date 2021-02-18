@@ -1,13 +1,13 @@
 import { generateJson } from '../../src/amplience'
 import fs from 'fs'
 
-it.skip('content-page', () => {
-  const result = generateJson(['./test/amplience/testdata/content-page.ts'])
+it('accordion-block', () => {
+  const name = 'accordion-block'
+  const result = generateJson([`./test/amplience/testdata/${name}.ts`])
 
   const expected = JSON.parse(
-    fs.readFileSync(`./test/amplience/testdata/schemas/content-page-schema.json`, 'utf-8')
+    fs.readFileSync(`./test/amplience/testdata/schemas/${name}-schema.json`, 'utf-8')
   )
-  console.log(JSON.stringify(result, null, 2))
-  const page = result.find(r => r.title === 'ContentPage')
-  expect(page).toContain(expected)
+  const page = result.find((r) => r.$id.includes(name))
+  expect(page).toEqual(expected)
 })

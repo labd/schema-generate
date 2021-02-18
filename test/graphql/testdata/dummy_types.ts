@@ -1,6 +1,4 @@
-type ID = string & { __ID?: undefined }
-type Int = number & { __Int?: undefined }
-type Float = number & { __Float?: undefined }
+import { Float, ID, Int } from '../../../src/graphql'
 
 export interface A {
   a: ID

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://bigcontent.io/cms/schema/v1/localization",
+
+  "title": "Localized value helpers",
+  "description": "Helper definitions for common localized values",
+  "type": "object",
+
+  "definitions": {
+    "localized-string": {
+      "allOf": [
+        { "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value" },
+        {
+          "properties": {
+            "values": {
+              "items": {
+                "properties": {
+                  "value": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+
+    "localized-image": {
+      "allOf": [
+        { "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value" },
+        {
+          "properties": {
+            "values": {
+              "items": {
+                "properties": {
+                  "value": {
+                    "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/image-link"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+
+    "localized-video": {
+      "allOf": [
+        { "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value" },
+        {
+          "properties": {
+            "values": {
+              "items": {
+                "properties": {
+                  "value": {
+                    "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/video-link"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://bigcontent.io/cms/schema/v1/core",
+
+  "definitions": {
+    "content": {
+      "type": "object",
+      "properties": {
+        "_meta": { "$ref": "#/definitions/meta" }
+      },
+      "required": ["_meta"]
+    },
+
+    "content-link": {
+      "properties": {
+        "_meta": {
+          "allOf": [
+            { "$ref": "#/definitions/meta" },
+            {
+              "properties": {
+                "schema": {
+                  "enum": ["http://bigcontent.io/cms/schema/v1/core#/definitions/content-link"]
+                }
+              }
+            }
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["_meta", "id", "contentType"]
+    },
+
+    "content-reference": {
+      "properties": {
+        "_meta": {
+          "allOf": [
+            { "$ref": "#/definitions/meta" },
+            {
+              "properties": {
+                "schema": {
+                  "enum": ["http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"]
+                }
+              }
+            }
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["_meta", "id", "contentType"]
+    },
+
+    "image-link": {
+      "properties": {
+        "_meta": {
+          "allOf": [
+            { "$ref": "#/definitions/meta" },
+            {
+              "properties": {
+                "schema": {
+                  "enum": ["http://bigcontent.io/cms/schema/v1/core#/definitions/image-link"]
+                }
+              }
+            }
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "endpoint": {
+          "type": "string"
+        },
+        "defaultHost": {
+          "type": "string"
+        }
+      },
+      "required": ["_meta", "id", "name", "endpoint", "defaultHost"]
+    },
+
+    "video-link": {
+      "properties": {
+        "_meta": {
+          "allOf": [
+            { "$ref": "#/definitions/meta" },
+            {
+              "properties": {
+                "schema": {
+                  "enum": ["http://bigcontent.io/cms/schema/v1/core#/definitions/video-link"]
+                }
+              }
+            }
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "endpoint": {
+          "type": "string"
+        },
+        "defaultHost": {
+          "type": "string"
+        }
+      },
+      "required": ["_meta", "id", "name", "endpoint", "defaultHost"]
+    },
+
+    "localized-value": {
+      "properties": {
+        "_meta": {
+          "allOf": [
+            { "$ref": "#/definitions/meta" },
+            {
+              "properties": {
+                "schema": {
+                  "enum": ["http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"]
+                }
+              }
+            }
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "locale": { "type": "string" },
+              "value": {}
+            },
+            "required": ["locale", "value"]
+          }
+        }
+      },
+      "required": ["_meta", "values"]
+    },
+
+    "meta": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 150
+        }
+      },
+      "required": ["schema"]
+    }
+  }
+}

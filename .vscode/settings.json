@@ -12,5 +12,6 @@
     "parserOptions": {
       "project": ["${workspaceFolder}/tsconfig.json"]
     }
-  }
+  },
+  "cSpell.words": ["amplience", "graphql"]
 }
