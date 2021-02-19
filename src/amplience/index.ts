@@ -1,7 +1,14 @@
 /* eslint-disable import/no-named-as-default-member */
 import { capitalCase, paramCase } from 'change-case'
-import { findTag, hasSymbolFlag, hasTag, hasTypeFlag, isValue } from '../lib/util'
+import { findTag, hasSymbolFlag, hasTag, hasTypeFlag, isValue, maybeToNumber } from '../lib/util'
 import ts from 'typescript'
+import {
+  AmplienceContentTypeJsonFiles,
+  AmplienceContentType,
+  AmplienceContentTypeSettings,
+  AmplienceContentTypeSchema,
+  AmpliencePropertyType,
+} from 'amplience/amplience_types'
 
 export const generateJson = (
   fileNames: string[],
@@ -18,16 +25,50 @@ export const generateJson = (
     .filter(isValue)
     .flatMap(checker.getExportsOfModule)
     .filter((s) => ts.isInterfaceDeclaration(s.declarations[0]))
-    .map((t) => checker.getTypeAtLocation(t.declarations[0]))
+    .map((s) => checker.getTypeAtLocation(s.declarations[0]))
     .filter((t) => hasTag(t.symbol, 'content'))
-    .map((t) => contentType(t, checker, schemaHost))
+    .map<AmplienceContentTypeJsonFiles>((t) => ({
+      name: paramCase(t.symbol.name),
+      contentType: contentType(t, schemaHost),
+      contentTypeSchema: contentTypeSchema(t, checker, schemaHost),
+      contentTypeSettings: contentTypeSettings(t, schemaHost),
+    }))
 }
+
+const contentType = (type: ts.Type, schemaHost: string): AmplienceContentType => ({
+  body: `./schemas/${paramCase(type.symbol.name)}-schema.json`,
+  schemaId: typeUri(type, schemaHost),
+  validationLevel: 'CONTENT_TYPE',
+})
+
+const contentTypeSettings = (type: ts.Type, schemaHost: string): AmplienceContentTypeSettings => ({
+  contentTypeUri: typeUri(type, schemaHost),
+  status: 'ACTIVE',
+  settings: {
+    label: capitalCase(type.symbol.name),
+    icons: [
+      {
+        size: 256,
+        url: 'https://bigcontent.io/cms/icons/ca-types-primitives.png',
+      },
+    ],
+    visualizations: [],
+    cards: [],
+  },
+})
+
+const typeUri = (type: ts.Type, schemaHost: string) =>
+  `${schemaHost}/${paramCase(type.symbol.name)}`
 
 /**
  * Returns a Amplience ContentType from an interface type.
  */
-const contentType = (type: ts.Type, checker: ts.TypeChecker, schemaHost: string) => ({
-  $id: `${schemaHost}/${paramCase(type.symbol.name)}`,
+const contentTypeSchema = (
+  type: ts.Type,
+  checker: ts.TypeChecker,
+  schemaHost: string
+): AmplienceContentTypeSchema => ({
+  $id: typeUri(type, schemaHost),
   $schema: 'http://json-schema.org/draft-07/schema#',
   ...refType(AMPLIENCE_TYPE.content),
   title: capitalCase(type.symbol.name),
@@ -80,6 +121,8 @@ const ampliencePropertyType = (
   type.symbol?.name === 'Array'
     ? {
         type: 'array',
+        minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
+        maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
         items: ampliencePropertyType(
           prop,
           checker.getTypeArguments(type as ts.TypeReference)[0],
@@ -135,13 +178,3 @@ const localized = (value: AmpliencePropertyType) => ({
     },
   },
 })
-
-interface AmpliencePropertyType {
-  title?: string
-  description?: string
-  type?: string
-  allOf?: { [key: string]: any }[]
-  items?: AmpliencePropertyType
-  properties?: any
-  format?: string
-}

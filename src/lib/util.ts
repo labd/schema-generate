@@ -13,3 +13,5 @@ export const hasSymbolFlag = (symbol: ts.Symbol, flag: ts.SymbolFlags) =>
 
 export const isValue = <T>(value: T): value is NonNullable<T> =>
   value !== null && value !== undefined
+
+export const maybeToNumber = (value: string | undefined) => (value ? Number(value) : undefined)

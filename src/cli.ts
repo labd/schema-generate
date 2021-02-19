@@ -3,9 +3,10 @@ import fs from 'fs'
 import { generateGraphqlTypes } from './graphql'
 import { Command } from 'commander'
 import { generateJson } from './amplience'
+import { writeContentTypeToDir } from './amplience/io'
 
-const logOrWrite = (result: string, outputFile?: string) =>
-  outputFile ? fs.writeFileSync(outputFile, result) : console.log(result)
+const watchIf = <T>(shouldWatch: boolean, files: string[], callback: () => T) =>
+  shouldWatch ? files.forEach((file) => fs.watchFile(file, callback)) : callback()
 
 const program = new Command()
 program.version(require('../package.json').version)
@@ -14,16 +15,28 @@ program
   .command('graphql <inputFiles...>')
   .description('Generate GraphQL types')
   .option('-o, --output <file>', 'Write the output to the file.')
+  .option('-w, --watch', 'Watch for changes')
   .action((inputFiles: string[], options) =>
-    logOrWrite(generateGraphqlTypes([...inputFiles]), options.output)
+    watchIf(options.watch, inputFiles, () =>
+      options.output
+        ? fs.writeFileSync(options.output, generateGraphqlTypes(inputFiles))
+        : console.log(generateGraphqlTypes(inputFiles))
+    )
   )
 
 program
   .command('amplience <inputFiles...>')
   .description('Generate Amplience types')
-  .option('-o, --output <file>', 'Write the output to the file.')
+  .option('-o, --output-dir <dir>', 'Write the output to JSON-files in <dir>.')
+  .option('-w, --watch', 'Watch for changes')
   .action((inputFiles: string[], options) =>
-    logOrWrite(JSON.stringify(generateJson([...inputFiles]), null, 2), options.output)
+    watchIf(options.watch, inputFiles, () =>
+      options.outputDir
+        ? generateJson(inputFiles).forEach((contentTypeJsonFiles) =>
+            writeContentTypeToDir(contentTypeJsonFiles, options.outputDir)
+          )
+        : console.log(JSON.stringify(generateJson([...inputFiles]), null, 2))
+    )
   )
 
 program.parse(process.argv)

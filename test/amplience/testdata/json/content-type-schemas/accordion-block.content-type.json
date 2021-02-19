@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/accordion-block-schema.json",
+  "schemaId": "https://schema-examples.com/accordion-block",
+  "validationLevel": "CONTENT_TYPE"
+}
