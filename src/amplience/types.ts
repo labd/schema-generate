@@ -2,7 +2,7 @@ export interface AmplienceContentTypeJsonFiles {
   name: string
   contentType: AmplienceContentType
   contentTypeSchema: AmplienceContentTypeSchema
-  contentTypeSettings: AmplienceContentTypeSettings
+  contentTypeSettings?: AmplienceContentTypeSettings
 }
 export interface AmplienceContentType {
   body: string
@@ -24,13 +24,14 @@ export interface AmplienceContentTypeSettings {
 export interface AmplienceContentTypeSchema {
   $id: string
   $schema: string
-  allOf: { $ref: string }[]
+  allOf: any[]
   title: string
-  description?: string
+  description: string
   type: 'object'
-  properties: { [name: string]: AmpliencePropertyType } | { _meta: { $ref: string } }
-  propertyOrder: string[]
-  required: string[]
+  properties?: { [name: string]: AmpliencePropertyType } | { _meta: { $ref: string } }
+  definitions?: { [name: string]: AmpliencePropertyType }
+  propertyOrder?: string[]
+  required?: string[]
 }
 
 export interface AmpliencePropertyType {
@@ -43,4 +44,6 @@ export interface AmpliencePropertyType {
   format?: string
   minLength?: number
   maxLength?: number
+  minItems?: number
+  maxItems?: number
 }

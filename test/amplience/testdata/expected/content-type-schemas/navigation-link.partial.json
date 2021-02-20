@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/navigation-link-schema.json",
+  "schemaId": "https://schema-examples.com/navigation-link",
+  "validationLevel": "PARTIAL"
+}

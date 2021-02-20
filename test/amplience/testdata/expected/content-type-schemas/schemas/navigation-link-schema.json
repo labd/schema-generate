@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema-examples.com/navigation-link",
+  "title": "Navigation Link",
+  "description": "A Link to a page",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "navigation-link": {
+      "title": "Navigation Link",
+      "description": "A Link to a page",
+      "type": "object",
+      "properties": {
+        "label": {
+          "title": "Label",
+          "description": "The label that will be displayed for this link.",
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "value": {
+          "type": "object",
+          "title": "Value",
+          "description": "A reference to a page you would like to link to.",
+          "allOf": [
+            {
+              "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+            },
+            {
+              "properties": {
+                "contentType": {
+                  "enum": [
+                    "https://schema-examples.com/home-page",
+                    "https://schema-examples.com/information-page",
+                    "https://schema-examples.com/product-overview-page"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "newTab": {
+          "title": "New Tab",
+          "description": "Open the link in a new tab",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/site-footer-schema.json",
+  "schemaId": "https://schema-examples.com/site-footer",
+  "validationLevel": "SLOT"
+}

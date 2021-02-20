@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/usp-schema.json",
+  "schemaId": "https://schema-examples.com/usp",
+  "validationLevel": "PARTIAL"
+}

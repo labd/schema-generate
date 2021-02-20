@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema-examples.com/usp",
+  "title": "Usp",
+  "description": "A Unique Selling Point",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "usp": {
+      "title": "Usp",
+      "description": "A Unique Selling Point",
+      "type": "object",
+      "properties": {
+        "label": {
+          "title": "Label",
+          "description": "The label that will be displayed for this USP",
+          "allOf": [
+            {
+              "$ref": "http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-string"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

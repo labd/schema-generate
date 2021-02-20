@@ -2,7 +2,7 @@
 import fs from 'fs'
 import { generateGraphqlTypes } from './graphql'
 import { Command } from 'commander'
-import { generateJson } from './amplience'
+import { generateAmplienceSchemas } from './amplience'
 import { writeContentTypeToDir } from './amplience/io'
 
 const watchIf = <T>(shouldWatch: boolean, files: string[], callback: () => T) =>
@@ -32,10 +32,10 @@ program
   .action((inputFiles: string[], options) =>
     watchIf(options.watch, inputFiles, () =>
       options.outputDir
-        ? generateJson(inputFiles).forEach((contentTypeJsonFiles) =>
+        ? generateAmplienceSchemas(inputFiles).forEach((contentTypeJsonFiles) =>
             writeContentTypeToDir(contentTypeJsonFiles, options.outputDir)
           )
-        : console.log(JSON.stringify(generateJson([...inputFiles]), null, 2))
+        : console.log(JSON.stringify(generateAmplienceSchemas(inputFiles), null, 2))
     )
   )
 
