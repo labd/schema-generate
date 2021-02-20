@@ -1,6 +1,6 @@
 /* eslint-disable import/no-named-as-default-member */
 import { paramCase } from 'change-case'
-import { hasTag, isValue } from '../lib/util'
+import { getExportedTypes, hasTag, isValue } from '../lib/util'
 import ts from 'typescript'
 import { AmplienceContentTypeJsonFiles } from './types'
 import { contentType, contentTypeSettings } from './common'
@@ -14,38 +14,35 @@ export const generateAmplienceSchemas = (
   const program = ts.createProgram(fileNames, {})
   const checker = program.getTypeChecker()
 
-  const exportedInterfaces = fileNames
-    .map(program.getSourceFile)
+  const exportedTypes = getExportedTypes(fileNames, program)
+
+  const exportedInterfaces = exportedTypes
+    .map((type) => (type.isClassOrInterface() ? type : undefined))
     .filter(isValue)
-    .flatMap(checker.getSymbolAtLocation)
-    .filter(isValue)
-    .flatMap(checker.getExportsOfModule)
-    .filter((s) => ts.isInterfaceDeclaration(s.declarations[0]))
-    .map((s) => checker.getTypeAtLocation(s.declarations[0]))
 
   return [
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'content'))
-      .map<AmplienceContentTypeJsonFiles>((t) => ({
-        name: paramCase(t.symbol.name),
-        contentType: contentType(t, schemaHost, 'CONTENT_TYPE'),
-        contentTypeSchema: contentTypeSchema(t, checker, schemaHost),
-        contentTypeSettings: contentTypeSettings(t, schemaHost),
+      .map<AmplienceContentTypeJsonFiles>((type) => ({
+        name: paramCase(type.symbol.name),
+        contentType: contentType(type, schemaHost, 'CONTENT_TYPE'),
+        contentTypeSchema: contentTypeSchema(type, checker, schemaHost),
+        contentTypeSettings: contentTypeSettings(type, schemaHost),
       })),
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'slot'))
-      .map<AmplienceContentTypeJsonFiles>((t) => ({
-        name: paramCase(t.symbol.name),
-        contentType: contentType(t, schemaHost, 'SLOT'),
-        contentTypeSchema: contentTypeSchema(t, checker, schemaHost),
-        contentTypeSettings: contentTypeSettings(t, schemaHost),
+      .map<AmplienceContentTypeJsonFiles>((type) => ({
+        name: paramCase(type.symbol.name),
+        contentType: contentType(type, schemaHost, 'SLOT'),
+        contentTypeSchema: contentTypeSchema(type, checker, schemaHost),
+        contentTypeSettings: contentTypeSettings(type, schemaHost),
       })),
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'partial'))
-      .map<AmplienceContentTypeJsonFiles>((t) => ({
-        name: paramCase(t.symbol.name),
-        contentType: contentType(t, schemaHost, 'PARTIAL'),
-        contentTypeSchema: partialSchema(t, checker, schemaHost),
+      .map<AmplienceContentTypeJsonFiles>((type) => ({
+        name: paramCase(type.symbol.name),
+        contentType: contentType(type, schemaHost, 'PARTIAL'),
+        contentTypeSchema: partialSchema(type, checker, schemaHost),
       })),
   ]
 }

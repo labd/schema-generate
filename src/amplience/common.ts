@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 import { AmplienceContentType, AmplienceContentTypeSettings, AmpliencePropertyType } from './types'
 import { capitalCase, paramCase } from 'change-case'
-import { maybeToNumber, findTag, hasTypeFlag, hasTag } from '../lib/util'
+import { maybeToNumber, findTag, hasTypeFlag, hasTag, switchArray } from '../lib/util'
 import ts from 'typescript'
 
 export const contentType = (
@@ -48,11 +48,18 @@ export const objectProperties = (
       {
         title: capitalCase(prop.name),
         description: description(prop, checker),
-        ...ampliencePropertyType(
-          prop,
+        ...switchArray<AmpliencePropertyType>(
           checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration),
           checker,
-          schemaHost
+          {
+            ifArray: (subType) => ({
+              type: 'array',
+              minItems: maybeToNumber(findTag(prop, 'minItems')?.text),
+              maxItems: maybeToNumber(findTag(prop, 'maxItems')?.text),
+              items: ampliencePropertyType(prop, subType, checker, schemaHost),
+            }),
+            other: (type) => ampliencePropertyType(prop, type, checker, schemaHost),
+          }
         ),
       },
     ])
@@ -67,19 +74,7 @@ export const ampliencePropertyType = (
   checker: ts.TypeChecker,
   schemaHost: string
 ): AmpliencePropertyType =>
-  type.symbol?.name === 'Array'
-    ? {
-        type: 'array',
-        minItems: maybeToNumber(findTag(prop, 'minItems')?.text),
-        maxItems: maybeToNumber(findTag(prop, 'maxItems')?.text),
-        items: ampliencePropertyType(
-          prop,
-          checker.getTypeArguments(type as ts.TypeReference)[0],
-          checker,
-          schemaHost
-        ),
-      }
-    : hasTypeFlag(type, ts.TypeFlags.Object)
+  hasTypeFlag(type, ts.TypeFlags.Object)
     ? hasTag(type.symbol, 'amplience_type')
       ? {
           type: 'object',

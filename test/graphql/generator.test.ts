@@ -6,7 +6,7 @@ const compare = (name: string) => ({
   expected: fs.readFileSync(`./test/graphql/testdata/${name}.graphql`, 'utf-8'),
 })
 
-it.each(['basic', 'union_types', 'dummy_types'])('generates correct end results', name => {
+it.each(['basic_types', 'union_types', 'dummy_types'])('generates correct %s', (name) => {
   const { result, expected } = compare(name)
   expect(result).toContain(expected)
 })

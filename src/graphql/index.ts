@@ -1,35 +1,38 @@
 /* eslint-disable import/no-named-as-default-member */
+import {
+  getExportedTypes,
+  hasSymbolFlag,
+  hasTag,
+  hasTypeFlag,
+  isValue,
+  switchArray,
+} from '../lib/util'
 import ts from 'typescript'
-
-export type ID = string & { __ID?: undefined }
-export type Int = number & { __ID?: undefined }
-export type Float = number & { __Float?: undefined }
 
 export const generateGraphqlTypes = (fileNames: string[]) => {
   const program = ts.createProgram(fileNames, {})
   const checker = program.getTypeChecker()
 
+  const exportedTypes = getExportedTypes(fileNames, program)
+
+  const exportedInterfaces = exportedTypes
+    .map((type) => (type.isClassOrInterface() ? type : undefined))
+    .filter(isValue)
+
+  const exportedUnionTypes = exportedTypes
+    .map((type) => (type.isUnion() ? type : undefined))
+    .filter(isValue)
+
   return (
-    fileNames
-      .map((f) => program.getSourceFile(f)!)
-      .flatMap((sourceFile) => [
-        ...sourceFile
-          .getChildAt(0)
-          .getChildren()
-          .filter(ts.isTypeAliasDeclaration)
-          .map((node) => serializeType(node, checker)),
-        ...sourceFile
-          .getChildAt(0)
-          .getChildren()
-          .filter(ts.isInterfaceDeclaration)
-          .map((node) => serializeInterface(node, checker)),
-      ])
-      .join('\n') + '\n'
+    [
+      ...exportedUnionTypes.map((type) => toUnionString(type, checker)),
+      ...exportedInterfaces.map((type) => toTypeString(type, checker)),
+    ].join('\n') + '\n'
   )
 }
 
-const serializeType = (node: ts.TypeAliasDeclaration, _checker: ts.TypeChecker) =>
-  node.getText().includes('|') ? node.getText().replace(/export type/, 'union') : ''
+const toUnionString = (type: ts.UnionType, _checker: ts.TypeChecker) =>
+  `union ${type.aliasSymbol!.name} = ${type.types.map((t) => t.symbol.name).join(' | ')}`
 
 /** Converts a TS interface into a GraphQL type.
  *
@@ -47,38 +50,46 @@ const serializeType = (node: ts.TypeAliasDeclaration, _checker: ts.TypeChecker) 
  * }
  * ```
  */
-const serializeInterface = (node: ts.InterfaceDeclaration, checker: ts.TypeChecker) => `type ${
-  node.name.text
+const toTypeString = (type: ts.InterfaceType, checker: ts.TypeChecker) => `type ${
+  type.symbol.name
 } {
-${node.members.map((p) => serializeMember(p, checker)).join('\n')}
+${type
+  .getProperties()
+  .map(
+    (prop) =>
+      `  ${prop.name}: ${toPropertyType(
+        prop,
+        checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration),
+        checker
+      )}`
+  )
+  .join('\n')}
 }`
 
 /**
  * Converts a TS interface property to a GraphQL property
  */
-const serializeMember = (node: ts.TypeElement, checker: ts.TypeChecker) =>
-  `  ${node.name?.getText()}: ${
-    getTagType(node.name as ts.Identifier, checker) ??
-    swapBrackets(checker.typeToString(checker.getTypeAtLocation(node.name as ts.Identifier)))
-  }${node.questionToken ? '' : '!'}`
+const toPropertyType = (prop: ts.Symbol, type: ts.Type, checker: ts.TypeChecker): string =>
+  switchArray(type, checker, {
+    ifArray: (subType) => `[${getName(prop, subType)}!]`,
+    other: (type) => getName(prop, type),
+  }) + maybeRequired(prop)
 
-/**
- * Looks in JSDoc for '@type' and returns that type name.
- */
-const getTagType = (identifier: ts.Identifier, checker: ts.TypeChecker) =>
-  checker
-    .getSymbolAtLocation(identifier)
-    ?.getJsDocTags()
-    .find((t) => t.name === 'type')?.text
+const getName = (prop: ts.Symbol, type: ts.Type) =>
+  hasTypeFlag(type, ts.TypeFlags.String)
+    ? prop.name === 'id'
+      ? 'ID'
+      : 'String'
+    : hasTypeFlag(type, ts.TypeFlags.Number)
+    ? hasTag(prop, 'float')
+      ? 'Float'
+      : 'Int'
+    : hasTypeFlag(type, ts.TypeFlags.Boolean)
+    ? 'Boolean'
+    : hasTypeFlag(type, ts.TypeFlags.Object)
+    ? type.symbol.name
+    : hasTypeFlag(type, ts.TypeFlags.Union)
+    ? type.aliasSymbol!.name
+    : ''
 
-// Converts `xxx[]` to `[xxx!]`
-const swapBrackets = (input: string) => {
-  const pattern = /(\w+)\[\]/
-  if (pattern.test(input)) {
-    return `[${mapType(input.substring(0, input.length - 2))}!]`
-  }
-  return mapType(input)
-}
-
-const mapType = (input: string) =>
-  input === 'string' ? 'String' : input === 'number' ? 'Float' : input
+const maybeRequired = (prop: ts.Symbol) => (hasSymbolFlag(prop, ts.SymbolFlags.Optional) ? '' : '!')
