@@ -46,4 +46,6 @@ export interface AmpliencePropertyType {
   maxLength?: number
   minItems?: number
   maxItems?: number
+  minimum?: number
+  maximum?: number
 }

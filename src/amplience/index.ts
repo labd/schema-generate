@@ -1,4 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { paramCase } from 'change-case'
 import { getExportedTypes, hasTag, isValue } from '../lib/util'
 import ts from 'typescript'
@@ -50,7 +51,26 @@ export const generateAmplienceSchemas = (
 /**
  * @amplience_type
  */
-export interface ContentReference {
+// @ts-ignore
+
+export interface ContentReference<
+  T1 extends object = object,
+  T2 extends object = object,
+  T3 extends object = object,
+  T4 extends object = object,
+  T5 extends object = object,
+  T6 extends object = object,
+  T7 extends object = object,
+  T8 extends object = object,
+  T9 extends object = object,
+  T10 extends object = object,
+  T11 extends object = object,
+  T12 extends object = object,
+  T13 extends object = object,
+  T14 extends object = object,
+  T15 extends object = object,
+  T16 extends object = object
+> {
   contentType: string
   id: string
 }
@@ -58,7 +78,25 @@ export interface ContentReference {
 /**
  * @amplience_type
  */
-export interface ContentLink {
+// @ts-ignore
+export interface ContentLink<
+  T1 extends object = object,
+  T2 extends object = object,
+  T3 extends object = object,
+  T4 extends object = object,
+  T5 extends object = object,
+  T6 extends object = object,
+  T7 extends object = object,
+  T8 extends object = object,
+  T9 extends object = object,
+  T10 extends object = object,
+  T11 extends object = object,
+  T12 extends object = object,
+  T13 extends object = object,
+  T14 extends object = object,
+  T15 extends object = object,
+  T16 extends object = object
+> {
   contentType: string
   id: string
 }

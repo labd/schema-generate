@@ -1,5 +1,15 @@
 import { ContentReference } from '../../../src/amplience'
 
+export interface HomePage {
+  title: string
+}
+export interface InformationPage {
+  title: string
+}
+export interface ProductOverviewPage {
+  title: string
+}
+
 /**
  * A Link to a page
  * @partial
@@ -7,12 +17,8 @@ import { ContentReference } from '../../../src/amplience'
 export interface NavigationLink {
   /**
    * A reference to a page you would like to link to.
-   * @enum
-   * | HomePage
-   * | InformationPage
-   * | ProductOverviewPage
    */
-  value: ContentReference
+  value: ContentReference<HomePage, InformationPage, ProductOverviewPage>
   /**
    * The label that will be displayed for this link.
    * @minLength 3

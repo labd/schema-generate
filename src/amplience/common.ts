@@ -80,13 +80,7 @@ export const ampliencePropertyType = (
           type: 'object',
           ...refType(
             amplienceDefinition(type),
-            hasTag(prop, 'enum')
-              ? {
-                  properties: {
-                    contentType: { enum: enumLinks(findTag(prop, 'enum')?.text ?? '', schemaHost) },
-                  },
-                }
-              : {}
+            enumProperties(type as ts.TypeReference, schemaHost)
           ),
         }
       : hasTag(type.symbol, 'partial')
@@ -100,13 +94,28 @@ export const ampliencePropertyType = (
         maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
       })
     : hasTypeFlag(type, ts.TypeFlags.Number)
-    ? { type: 'number' }
+    ? {
+        type: 'number',
+        minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
+        maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
+      }
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
     ? { type: 'boolean' }
     : {}
 
-const enumLinks = (input: string, schemaHost: string) =>
-  input.split('\n').map((l) => typeUriFromString(l.replace(/[\-|*] ?/, ''), schemaHost))
+const enumProperties = (type: ts.TypeReference, schemaHost: string) =>
+  type.typeArguments?.length
+    ? {
+        properties: {
+          contentType: {
+            enum: type.typeArguments
+              // filter out the default `object` arguments
+              ?.filter((a) => a.symbol)
+              .map((a) => typeUri(a, schemaHost)),
+          },
+        },
+      }
+    : {}
 
 /**
  * Wraps a Amplience type object in localized JSON
