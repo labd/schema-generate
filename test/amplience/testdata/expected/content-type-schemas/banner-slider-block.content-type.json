@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/banner-slider-block-schema.json",
+  "schemaId": "https://schema-examples.com/banner-slider-block",
+  "validationLevel": "CONTENT_TYPE"
+}

@@ -83,7 +83,7 @@ export const ampliencePropertyType = (
             enumProperties(type as ts.TypeReference, schemaHost)
           ),
         }
-      : hasTag(type.symbol, 'partial')
+      : hasTag(type.symbol, 'partial') || hasTag(type.symbol, 'content')
       ? refType(definitionUri(type, schemaHost))
       : { type: 'object', properties: objectProperties(type, checker, schemaHost) }
     : hasTypeFlag(type, ts.TypeFlags.String)
@@ -158,8 +158,6 @@ export const localized = (value: AmpliencePropertyType) => ({
 
 export const typeUri = (type: ts.Type, schemaHost: string) =>
   `${schemaHost}/${paramCase(type.symbol.name)}`
-export const typeUriFromString = (typeName: string, schemaHost: string) =>
-  `${schemaHost}/${paramCase(typeName)}`
 
 export const definitionUri = (type: ts.Type, schemaHost: string) =>
   `${schemaHost}/${paramCase(type.symbol.name)}#/definitions/${paramCase(type.symbol.name)}`

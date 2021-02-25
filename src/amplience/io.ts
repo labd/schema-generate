@@ -10,7 +10,7 @@ export const writeContentTypeToDir = (input: AmplienceContentTypeJsonFiles, outp
   if (input.contentTypeSettings) {
     fs.writeFileSync(
       path.join(outputDir, 'content-types', `${input.name}.json`),
-      JSON.stringify(input.contentTypeSettings, null, 2)
+      JSON.stringify(input.contentTypeSettings, null, 2) + '\n'
     )
   }
   fs.writeFileSync(
@@ -19,10 +19,10 @@ export const writeContentTypeToDir = (input: AmplienceContentTypeJsonFiles, outp
       'content-type-schemas',
       `${input.name}.${paramCase(input.contentType.validationLevel)}.json`
     ),
-    JSON.stringify(input.contentType, null, 2)
+    JSON.stringify(input.contentType, null, 2) + '\n'
   )
   fs.writeFileSync(
     path.join(outputDir, 'content-type-schemas', 'schemas', `${input.name}-schema.json`),
-    JSON.stringify(input.contentTypeSchema, null, 2)
+    JSON.stringify(input.contentTypeSchema, null, 2) + '\n'
   )
 }

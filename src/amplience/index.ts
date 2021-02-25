@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { paramCase } from 'change-case'
-import { getExportedTypes, hasTag, isValue } from '../lib/util'
+import { findTag, getExportedTypes, hasTag, isValue } from '../lib/util'
 import ts from 'typescript'
 import { AmplienceContentTypeJsonFiles } from './types'
 import { contentType, contentTypeSettings } from './common'
@@ -28,7 +28,11 @@ export const generateAmplienceSchemas = (
         name: paramCase(type.symbol.name),
         contentType: contentType(type, schemaHost, 'CONTENT_TYPE'),
         contentTypeSchema: contentTypeSchema(type, checker, schemaHost),
-        contentTypeSettings: contentTypeSettings(type, schemaHost),
+        contentTypeSettings: contentTypeSettings(
+          type,
+          schemaHost,
+          findTag(type.symbol, 'icon')?.text
+        ),
       })),
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'slot'))
@@ -36,7 +40,11 @@ export const generateAmplienceSchemas = (
         name: paramCase(type.symbol.name),
         contentType: contentType(type, schemaHost, 'SLOT'),
         contentTypeSchema: contentTypeSchema(type, checker, schemaHost),
-        contentTypeSettings: contentTypeSettings(type, schemaHost),
+        contentTypeSettings: contentTypeSettings(
+          type,
+          schemaHost,
+          findTag(type.symbol, 'icon')?.text
+        ),
       })),
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'partial'))
