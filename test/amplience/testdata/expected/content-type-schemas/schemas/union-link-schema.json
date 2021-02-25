@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema-examples.com/union-link",
+  "title": "Union Link",
+  "description": "A Link to a page",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "union-link": {
+      "title": "Union Link",
+      "description": "A Link to a page",
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "object",
+          "title": "Page",
+          "allOf": [
+            {
+              "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+            },
+            {
+              "properties": {
+                "contentType": {
+                  "enum": [
+                    "https://schema-examples.com/home-page",
+                    "https://schema-examples.com/category-page",
+                    "https://schema-examples.com/content-page"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

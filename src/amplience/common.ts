@@ -110,7 +110,8 @@ const enumProperties = (type: ts.TypeReference, schemaHost: string) =>
           contentType: {
             enum: type.typeArguments
               // filter out the default `object` arguments
-              ?.filter((a) => a.symbol)
+              ?.filter((a) => a.isUnion() || a.symbol)
+              .flatMap((a) => (a.isUnion() ? a.types : [a]))
               .map((a) => typeUri(a, schemaHost)),
           },
         },

@@ -4,11 +4,12 @@ import fs from 'fs'
 const readJson = <T>(path: string) => JSON.parse(fs.readFileSync(path, 'utf-8')) as T
 
 it.each([
-  ['content-type', 'accordion-block'],
-  ['partial', 'navigation-link'],
-  ['partial', 'usp'],
-  ['slot', 'site-footer'],
-  ['content-type', 'banner-slider-block'],
+  // ['content-type', 'accordion-block'],
+  // ['partial', 'navigation-link'],
+  // ['partial', 'usp'],
+  // ['slot', 'site-footer'],
+  // ['content-type', 'banner-slider-block'],
+  ['partial', 'union-link'],
 ])('correct JSON files for %s %s', (type, name) => {
   const jsonPath = './test/amplience/testdata/expected'
   const result = pruned(

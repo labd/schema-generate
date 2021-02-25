@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/union-link-schema.json",
+  "schemaId": "https://schema-examples.com/union-link",
+  "validationLevel": "PARTIAL"
+}
