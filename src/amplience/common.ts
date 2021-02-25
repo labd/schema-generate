@@ -4,7 +4,7 @@ import { capitalCase, paramCase } from 'change-case'
 import { maybeToNumber, findTag, hasTypeFlag, hasTag, switchArray } from '../lib/util'
 import ts from 'typescript'
 
-export const contentType = (
+export const contentTypeSchema = (
   type: ts.Type,
   schemaHost: string,
   validationLevel: 'CONTENT_TYPE' | 'PARTIAL' | 'SLOT'
@@ -14,7 +14,7 @@ export const contentType = (
   validationLevel,
 })
 
-export const contentTypeSettings = (
+export const contentType = (
   type: ts.Type,
   schemaHost: string,
   icon = 'https://bigcontent.io/cms/icons/ca-types-primitives.png'
@@ -76,13 +76,20 @@ export const ampliencePropertyType = (
 ): AmpliencePropertyType =>
   hasTypeFlag(type, ts.TypeFlags.Object)
     ? hasTag(type.symbol, 'amplience_type')
-      ? {
-          type: 'object',
-          ...refType(
-            amplienceDefinition(type),
-            enumProperties(type as ts.TypeReference, schemaHost)
-          ),
-        }
+      ? hasTag(prop, 'localized') && ['ImageLink', 'VideoLink'].includes(type.symbol.name)
+        ? refType(AMPLIENCE_TYPE.LOCALIZED[type.symbol.name as 'ImageLink' | 'VideoLink'])
+        : ['ImageLink', 'VideoLink'].includes(type.symbol.name)
+        ? {
+            type: 'object',
+            ...refType(AMPLIENCE_TYPE.CORE[type.symbol.name as 'ImageLink' | 'VideoLink']),
+          }
+        : {
+            type: 'object',
+            ...refType(
+              AMPLIENCE_TYPE.CORE[type.symbol.name as 'ContentReference'],
+              enumProperties(type as ts.TypeReference, schemaHost)
+            ),
+          }
       : hasTag(type.symbol, 'partial') || hasTag(type.symbol, 'content')
       ? refType(definitionUri(type, schemaHost))
       : { type: 'object', properties: objectProperties(type, checker, schemaHost) }
@@ -105,20 +112,17 @@ export const ampliencePropertyType = (
     ? { type: 'string', enum: type.types.map((t) => (t as ts.StringLiteralType).value) }
     : {}
 
-const enumProperties = (type: ts.TypeReference, schemaHost: string) =>
-  type.typeArguments?.length
-    ? {
-        properties: {
-          contentType: {
-            enum: type.typeArguments
-              // filter out the default `object` arguments
-              ?.filter((a) => a.isUnion() || a.symbol)
-              .flatMap((a) => (a.isUnion() ? a.types : [a]))
-              .map((a) => typeUri(a, schemaHost)),
-          },
-        },
-      }
-    : {}
+const enumProperties = (type: ts.TypeReference, schemaHost: string) => ({
+  properties: {
+    contentType: {
+      enum: type.typeArguments
+        // filter out the default `object` arguments
+        ?.filter((a) => a.isUnion() || a.symbol)
+        .flatMap((a) => (a.isUnion() ? a.types : [a]))
+        .map((a) => typeUri(a, schemaHost)),
+    },
+  },
+})
 
 /**
  * Wraps a Amplience type object in localized JSON
@@ -126,7 +130,7 @@ const enumProperties = (type: ts.TypeReference, schemaHost: string) =>
 export const checkLocalized = (prop: ts.Symbol, result: AmpliencePropertyType) =>
   hasTag(prop, 'localized')
     ? prop.getJsDocTags().length === 1
-      ? refType(AMPLIENCE_TYPE.localizedString)
+      ? refType(AMPLIENCE_TYPE.LOCALIZED.String)
       : localized(result)
     : result
 
@@ -137,9 +141,18 @@ export const description = (symbol: ts.Symbol, checker: ts.TypeChecker) =>
   symbol.getDocumentationComment(checker).map((x) => x.text)[0]
 
 export const AMPLIENCE_TYPE = {
-  localizedString: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-string',
-  localizedValue: 'http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value',
-  content: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content',
+  LOCALIZED: {
+    ImageLink: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-image',
+    VideoLink: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-video',
+    String: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-string',
+  },
+  CORE: {
+    LocalizedValue: 'http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value',
+    Content: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content',
+    ImageLink: 'http://bigcontent.io/cms/schema/v1/core#/definitions/image-link',
+    VideoLink: 'http://bigcontent.io/cms/schema/v1/core#/definitions/video-link',
+    ContentReference: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference',
+  },
 }
 
 export const refType = (ref: string, ...other: object[]) => ({
@@ -147,7 +160,7 @@ export const refType = (ref: string, ...other: object[]) => ({
 })
 
 export const localized = (value: AmpliencePropertyType) => ({
-  ...refType(AMPLIENCE_TYPE.localizedValue),
+  ...refType(AMPLIENCE_TYPE.CORE.LocalizedValue),
   properties: {
     values: {
       items: {
@@ -164,6 +177,3 @@ export const typeUri = (type: ts.Type, schemaHost: string) =>
 
 export const definitionUri = (type: ts.Type, schemaHost: string) =>
   `${schemaHost}/${paramCase(type.symbol.name)}#/definitions/${paramCase(type.symbol.name)}`
-
-export const amplienceDefinition = (type: ts.Type) =>
-  `http://bigcontent.io/cms/schema/v1/core#/definitions/${paramCase(type.symbol.name)}`

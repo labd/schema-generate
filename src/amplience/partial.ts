@@ -14,7 +14,7 @@ export const partialSchema = (
 ): AmplienceContentTypeSchema => ({
   $id: typeUri(type, schemaHost),
   $schema: 'http://json-schema.org/draft-07/schema#',
-  ...refType(AMPLIENCE_TYPE.content),
+  ...refType(AMPLIENCE_TYPE.CORE.Content),
   title: capitalCase(type.symbol.name),
   description: description(type.symbol, checker) ?? capitalCase(type.symbol.name),
   type: 'object',

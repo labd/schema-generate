@@ -1,8 +1,8 @@
 export interface AmplienceContentTypeJsonFiles {
   name: string
-  contentType: AmplienceContentType
-  contentTypeSchema: AmplienceContentTypeSchema
-  contentTypeSettings?: AmplienceContentTypeSettings
+  contentTypeSchema: AmplienceContentType
+  contentTypeSchemaBody: AmplienceContentTypeSchema
+  contentType?: AmplienceContentTypeSettings
 }
 export interface AmplienceContentType {
   body: string
