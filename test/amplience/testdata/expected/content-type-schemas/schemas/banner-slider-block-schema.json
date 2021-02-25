@@ -20,7 +20,7 @@
       "items": {
         "allOf": [
           {
-            "$ref": "https://schema-examples.com/banner-block#/definitions/banner-block"
+            "$ref": "https://schema-examples.com/banner-block"
           }
         ]
       }

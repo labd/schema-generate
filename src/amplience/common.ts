@@ -90,8 +90,10 @@ export const ampliencePropertyType = (
               enumProperties(type as ts.TypeReference, schemaHost)
             ),
           }
-      : hasTag(type.symbol, 'partial') || hasTag(type.symbol, 'content')
+      : hasTag(type.symbol, 'partial')
       ? refType(definitionUri(type, schemaHost))
+      : hasTag(type.symbol, 'content')
+      ? refType(typeUri(type, schemaHost))
       : { type: 'object', properties: objectProperties(type, checker, schemaHost) }
     : hasTypeFlag(type, ts.TypeFlags.String)
     ? checkLocalized(prop, {
