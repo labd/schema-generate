@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema-examples.com/enum",
+  "title": "Enum",
+  "description": "Enum",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "enum": {
+      "title": "Enum",
+      "type": "object",
+      "properties": {
+        "size": {
+          "title": "Size",
+          "type": "string",
+          "enum": ["big", "small"]
+        }
+      }
+    }
+  }
+}

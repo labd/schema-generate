@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/enum-schema.json",
+  "schemaId": "https://schema-examples.com/enum",
+  "validationLevel": "PARTIAL"
+}

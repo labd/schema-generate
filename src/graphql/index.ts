@@ -32,7 +32,11 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
 }
 
 const toUnionString = (type: ts.UnionType, _checker: ts.TypeChecker) =>
-  `union ${type.aliasSymbol!.name} = ${type.types.map((t) => t.symbol.name).join(' | ')}`
+  type.types.every((t) => t.isStringLiteral())
+    ? `enum ${type.aliasSymbol!.name} {\n${type.types
+        .map((t) => '  ' + (t as ts.StringLiteralType).value)
+        .join('\n')}\n}`
+    : `union ${type.aliasSymbol!.name} = ${type.types.map((t) => t.symbol.name).join(' | ')}`
 
 /** Converts a TS interface into a GraphQL type.
  *

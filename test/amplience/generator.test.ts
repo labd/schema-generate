@@ -9,7 +9,8 @@ it.each([
   // ['partial', 'usp'],
   // ['slot', 'site-footer'],
   // ['content-type', 'banner-slider-block'],
-  ['partial', 'union-link'],
+  // ['partial', 'union-link'],
+  ['partial', 'enum'],
 ])('correct JSON files for %s %s', (type, name) => {
   const jsonPath = './test/amplience/testdata/expected'
   const result = pruned(

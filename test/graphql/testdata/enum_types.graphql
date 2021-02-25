@@ -1,0 +1,7 @@
+enum Size {
+  big
+  small
+}
+type A {
+  size: Size!
+}

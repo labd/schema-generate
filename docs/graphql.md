@@ -1,16 +1,10 @@
-# Schema Generate
-
-This repository can generate schema files based on Typescript files containing interfaces.
-
-Currently it only supports GraphQL types.
-
-## GraphQL
+# GraphQL
 
 The GraphQL schema generator takes Typescript files with interfaces as input and generates GraphQL types as a result.
 
 For example, given the following file called `books.ts`.
-```ts
 
+```ts
 interface Author {
     name: string
 }
@@ -53,20 +47,4 @@ type Book {
 type Product {
     title: String!
 }
-```
-
-Either by using the CLI
-
-```bash
-yarn schema-generate graphql books.ts
-# or
-yarn schema-generate graphql books.ts -o schema.graphql
-```
-
-Or calling the function directly
-
-```ts
-import { generateGraphqlTypes } from 'schema-generate/graphql'
-
-const graphqlTypeString = generateGraphqlTypes(['books.ts'])
 ```

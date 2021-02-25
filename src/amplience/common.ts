@@ -101,6 +101,8 @@ export const ampliencePropertyType = (
       }
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
     ? { type: 'boolean' }
+    : type.isUnion() && type.types.every((t) => t.isStringLiteral())
+    ? { type: 'string', enum: type.types.map((t) => (t as ts.StringLiteralType).value) }
     : {}
 
 const enumProperties = (type: ts.TypeReference, schemaHost: string) =>
