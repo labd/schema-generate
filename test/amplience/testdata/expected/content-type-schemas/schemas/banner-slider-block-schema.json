@@ -10,9 +10,6 @@
   "description": "A slider for banners",
   "type": "object",
   "properties": {
-    "_meta": {
-      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/meta"
-    },
     "items": {
       "title": "Items",
       "type": "array",
@@ -26,6 +23,6 @@
       }
     }
   },
-  "propertyOrder": ["_meta", "items"],
-  "required": ["_meta", "items"]
+  "propertyOrder": ["items"],
+  "required": ["items"]
 }

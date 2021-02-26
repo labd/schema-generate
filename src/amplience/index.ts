@@ -78,7 +78,7 @@ export interface ContentReference<
 /**
  * @amplience_type
  */
-export interface ImageLink {
+export interface AmplienceImage {
   id: string
   name: string
   endpoint: string
@@ -88,7 +88,7 @@ export interface ImageLink {
 /**
  * @amplience_type
  */
-export interface VideoLink {
+export interface AmplienceVideo {
   id: string
   name: string
   endpoint: string

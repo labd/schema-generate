@@ -28,7 +28,7 @@ export interface AmplienceContentTypeSchema {
   title: string
   description: string
   type: 'object'
-  properties?: { [name: string]: AmpliencePropertyType } | { _meta: { $ref: string } }
+  properties?: { [name: string]: AmpliencePropertyType }
   definitions?: { [name: string]: AmpliencePropertyType }
   propertyOrder?: string[]
   required?: string[]

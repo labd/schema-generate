@@ -1,5 +1,7 @@
+scalar AmplienceImage
 type A {
   id: ID!
   b: Int!
   c: Float!
+  image: AmplienceImage!
 }

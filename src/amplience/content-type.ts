@@ -20,15 +20,11 @@ export const contentTypeSchemaBody = (
   description: description(type.symbol, checker) ?? capitalCase(type.symbol.name),
   type: 'object',
   properties: {
-    _meta: { $ref: 'http://bigcontent.io/cms/schema/v1/core#/definitions/meta' },
     ...objectProperties(type, checker, schemaHost),
   },
-  propertyOrder: ['_meta', ...type.getProperties().map((n) => n.name)],
-  required: [
-    '_meta',
-    ...type
-      .getProperties()
-      .filter((m) => !hasSymbolFlag(m, ts.SymbolFlags.Optional))
-      .map((n) => n.name),
-  ],
+  propertyOrder: type.getProperties().map((n) => n.name),
+  required: type
+    .getProperties()
+    .filter((m) => !hasSymbolFlag(m, ts.SymbolFlags.Optional))
+    .map((n) => n.name),
 })

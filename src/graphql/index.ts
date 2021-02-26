@@ -23,20 +23,27 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
     .map((type) => (type.isUnion() ? type : undefined))
     .filter(isValue)
 
+  const exportedIntersectionTypes = exportedTypes.filter(isScalarType)
+
   return (
     [
-      ...exportedUnionTypes.map((type) => toUnionString(type, checker)),
+      ...exportedIntersectionTypes.map(toScalar),
+      ...exportedUnionTypes.map(toUnionString),
       ...exportedInterfaces.map((type) => toTypeString(type, checker)),
     ].join('\n') + '\n'
   )
 }
 
-const toUnionString = (type: ts.UnionType, _checker: ts.TypeChecker) =>
+const toUnionString = (type: ts.UnionType) =>
   type.types.every((t) => t.isStringLiteral())
     ? `enum ${type.aliasSymbol!.name} {\n${type.types
         .map((t) => '  ' + (t as ts.StringLiteralType).value)
         .join('\n')}\n}`
     : `union ${type.aliasSymbol!.name} = ${type.types.map((t) => t.symbol.name).join(' | ')}`
+
+const isScalarType = (type: ts.Type): type is ts.IntersectionType =>
+  type.isIntersection() && type.getProperties().some((p) => p.name === `__scalar`)
+const toScalar = (type: ts.IntersectionType) => `scalar ${type.aliasSymbol!.name}`
 
 /** Converts a TS interface into a GraphQL type.
  *
@@ -70,6 +77,21 @@ ${type
   .join('\n')}
 }`
 
+const extractScalarsFromType = (type: ts.InterfaceType, checker: ts.TypeChecker) =>
+  type.getProperties().flatMap(() =>
+    switchArray(type, checker, {
+      ifArray: (subType) => extractScalarsFromProp(subType, checker),
+      other: (type) => extractScalarsFromProp(type, checker),
+    })
+  )
+
+const extractScalarsFromProp = (type: ts.Type, checker: ts.TypeChecker): ts.Type[] =>
+  isScalarType(type)
+    ? [type]
+    : type.isClassOrInterface()
+    ? extractScalarsFromType(type, checker)
+    : []
+
 /**
  * Converts a TS interface property to a GraphQL property
  */
@@ -80,7 +102,9 @@ const toPropertyType = (prop: ts.Symbol, type: ts.Type, checker: ts.TypeChecker)
   }) + maybeRequired(prop)
 
 const getName = (prop: ts.Symbol, type: ts.Type) =>
-  hasTypeFlag(type, ts.TypeFlags.String)
+  isScalarType(type)
+    ? type.aliasSymbol?.name
+    : hasTypeFlag(type, ts.TypeFlags.String)
     ? prop.name === 'id'
       ? 'ID'
       : 'String'

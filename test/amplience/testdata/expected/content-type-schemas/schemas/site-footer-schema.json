@@ -10,7 +10,6 @@
     }
   ],
   "properties": {
-    "_meta": { "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/meta" },
     "usps": {
       "title": "Usps",
       "type": "array",
@@ -52,6 +51,6 @@
       }
     }
   },
-  "propertyOrder": ["_meta", "usps", "navigation"],
-  "required": ["_meta", "usps", "navigation"]
+  "propertyOrder": ["usps", "navigation"],
+  "required": ["usps", "navigation"]
 }

@@ -1,9 +1,9 @@
-import { AmplienceImage } from '../../../src/amplience'
+export type AmplienceImage = string & { __scalar?: undefined }
 
 /**
  * @partial
  */
-export interface ImageLinks {
+export interface CustomImageLinks {
   /**
    * @localized
    */

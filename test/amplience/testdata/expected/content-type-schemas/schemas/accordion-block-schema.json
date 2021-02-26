@@ -10,7 +10,6 @@
     }
   ],
   "properties": {
-    "_meta": { "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/meta" },
     "title": {
       "title": "Title",
       "description": "Title of the accordion",
@@ -59,6 +58,6 @@
       }
     }
   },
-  "required": ["_meta", "title", "items"],
-  "propertyOrder": ["_meta", "title", "items"]
+  "required": ["title", "items"],
+  "propertyOrder": ["title", "items"]
 }

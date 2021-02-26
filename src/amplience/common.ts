@@ -74,22 +74,30 @@ export const ampliencePropertyType = (
   checker: ts.TypeChecker,
   schemaHost: string
 ): AmpliencePropertyType =>
-  hasTypeFlag(type, ts.TypeFlags.Object)
-    ? hasTag(type.symbol, 'amplience_type')
-      ? hasTag(prop, 'localized') && ['ImageLink', 'VideoLink'].includes(type.symbol.name)
-        ? refType(AMPLIENCE_TYPE.LOCALIZED[type.symbol.name as 'ImageLink' | 'VideoLink'])
-        : ['ImageLink', 'VideoLink'].includes(type.symbol.name)
-        ? {
-            type: 'object',
-            ...refType(AMPLIENCE_TYPE.CORE[type.symbol.name as 'ImageLink' | 'VideoLink']),
-          }
-        : {
-            type: 'object',
-            ...refType(
-              AMPLIENCE_TYPE.CORE[type.symbol.name as 'ContentReference'],
-              enumProperties(type as ts.TypeReference, schemaHost)
-            ),
-          }
+  ['AmplienceImage', 'AmplienceVideo'].includes(type.aliasSymbol?.name ?? type.symbol?.name ?? '')
+    ? hasTag(prop, 'localized')
+      ? refType(
+          AMPLIENCE_TYPE.LOCALIZED[
+            (type.aliasSymbol?.name ?? type.symbol?.name) as 'AmplienceImage' | 'AmplienceVideo'
+          ]
+        )
+      : {
+          type: 'object',
+          ...refType(
+            AMPLIENCE_TYPE.CORE[
+              (type.aliasSymbol?.name ?? type.symbol?.name) as 'AmplienceImage' | 'AmplienceVideo'
+            ]
+          ),
+        }
+    : hasTypeFlag(type, ts.TypeFlags.Object)
+    ? ['ContentReference'].includes(type.symbol.name)
+      ? {
+          type: 'object',
+          ...refType(
+            AMPLIENCE_TYPE.CORE[type.symbol.name as 'ContentReference'],
+            enumProperties(type as ts.TypeReference, schemaHost)
+          ),
+        }
       : hasTag(type.symbol, 'partial')
       ? refType(definitionUri(type, schemaHost))
       : hasTag(type.symbol, 'content')
@@ -144,15 +152,15 @@ export const description = (symbol: ts.Symbol, checker: ts.TypeChecker) =>
 
 export const AMPLIENCE_TYPE = {
   LOCALIZED: {
-    ImageLink: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-image',
-    VideoLink: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-video',
+    AmplienceImage: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-image',
+    AmplienceVideo: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-video',
     String: 'http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-string',
   },
   CORE: {
     LocalizedValue: 'http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value',
     Content: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content',
-    ImageLink: 'http://bigcontent.io/cms/schema/v1/core#/definitions/image-link',
-    VideoLink: 'http://bigcontent.io/cms/schema/v1/core#/definitions/video-link',
+    AmplienceImage: 'http://bigcontent.io/cms/schema/v1/core#/definitions/image-link',
+    AmplienceVideo: 'http://bigcontent.io/cms/schema/v1/core#/definitions/video-link',
     ContentReference: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference',
   },
 }

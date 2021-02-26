@@ -12,6 +12,7 @@ it.each([
   ['partial', 'union-link'],
   ['partial', 'enum'],
   ['partial', 'image-links'],
+  ['partial', 'custom-image-links'],
 ])('correct JSON files for %s %s', (type, name) => {
   const jsonPath = './test/amplience/testdata/expected'
   const result = pruned(
@@ -37,3 +38,6 @@ it.each([
 
 /** Removes all undefined properties */
 const pruned = <T>(object: T): Partial<T> => JSON.parse(JSON.stringify(object))
+
+// slot with content link
+// or content type with content reference

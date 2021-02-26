@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/custom-image-links-schema.json",
+  "schemaId": "https://schema-examples.com/custom-image-links",
+  "validationLevel": "PARTIAL"
+}
