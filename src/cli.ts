@@ -9,7 +9,10 @@ const watchIf = <T>(shouldWatch: boolean, files: string[], callback: () => T) =>
   shouldWatch ? files.forEach((file) => fs.watchFile(file, callback)) : callback()
 
 const program = new Command()
-program.version(require('../package.json').version)
+const version = JSON.parse(
+  fs.readFileSync(fs.existsSync('package.json') ? 'package.json' : '../package.json', 'utf-8')
+).version
+program.version(version)
 
 program
   .command('graphql <inputFiles...>')

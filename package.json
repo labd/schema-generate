@@ -1,13 +1,12 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.7",
   "license": "MIT",
   "name": "schema-generate",
   "author": "Kors van Loon",
-  "typings": "dist/index.d.ts",
+  "bin": "./cli.js",
   "files": [
-    "dist"
+    "*"
   ],
-  "bin": "dist/cli.js",
   "engines": {
     "node": ">=10"
   },
@@ -17,6 +16,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "postbuild": "cp package.json dist",
     "test": "jest",
     "schema-generate": "NODE_PATH=./src node -r ts-node/register src/cli.ts"
   },
