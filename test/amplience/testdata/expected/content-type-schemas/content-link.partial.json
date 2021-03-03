@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/content-link-schema.json",
+  "schemaId": "https://schema-examples.com/content-link",
+  "validationLevel": "PARTIAL"
+}

@@ -1,0 +1,4 @@
+visualizations:
+  - labelasdfs: a
+    schemaUri: b
+    default: false

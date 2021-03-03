@@ -23,7 +23,6 @@
           "maxLength": 200
         },
         "value": {
-          "type": "object",
           "title": "Value",
           "description": "A reference to a page you would like to link to.",
           "allOf": [
@@ -48,7 +47,9 @@
           "description": "Open the link in a new tab",
           "type": "boolean"
         }
-      }
+      },
+      "required": ["value", "label", "newTab"],
+      "propertyOrder": ["value", "label", "newTab"]
     }
   }
 }

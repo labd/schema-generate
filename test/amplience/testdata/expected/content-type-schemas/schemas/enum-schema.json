@@ -19,7 +19,9 @@
           "type": "string",
           "enum": ["big", "small"]
         }
-      }
+      },
+      "required": ["size"],
+      "propertyOrder": ["size"]
     }
   }
 }

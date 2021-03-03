@@ -13,11 +13,16 @@ it.each([
   ['partial', 'enum'],
   ['partial', 'image-links'],
   ['partial', 'custom-image-links'],
+  ['partial', 'content-link'],
 ])('correct JSON files for %s %s', (type, name) => {
   const jsonPath = './test/amplience/testdata/expected'
   const result = pruned(
     generateAmplienceSchemas([`./test/amplience/testdata/${name}.ts`]).find((r) => r.name === name)
   )
+
+  if (process.env.LOG) {
+    console.log(JSON.stringify(result, null, 2))
+  }
 
   const contentTypeSchema = readJson(`${jsonPath}/content-type-schemas/${name}.${type}.json`)
   const contentTypeSchemaBody = readJson(

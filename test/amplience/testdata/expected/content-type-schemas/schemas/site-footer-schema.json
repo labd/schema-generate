@@ -47,7 +47,9 @@
               "type": "string"
             }
           }
-        }
+        },
+        "required": ["title", "links"],
+        "propertyOrder": ["title", "links"]
       }
     }
   },

@@ -1,0 +1,8 @@
+schemaHost: test
+visualizations:
+  - label: test
+    templatedUri: test
+    default: false
+  - label: test2
+    templatedUri: test2
+    default: false

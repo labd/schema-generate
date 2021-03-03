@@ -1,5 +1,5 @@
 {
-  "version": "0.0.12",
+  "version": "0.1.0",
   "license": "MIT",
   "name": "schema-generate",
   "author": "Kors van Loon",
@@ -17,7 +17,6 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prepare": "tsc -p tsconfig.json",
     "test": "jest",
     "schema-generate": "NODE_PATH=./src node -r ts-node/register src/cli.ts"
   },
@@ -26,8 +25,10 @@
     "commander": "^7.0.0",
     "dc-management-sdk-js": "1.10.0",
     "dotenv": "8.2.0",
+    "jsonschema": "^1.4.0",
     "ts-node": "^9.1.1",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.0",

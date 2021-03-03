@@ -42,6 +42,8 @@ export interface AmpliencePropertyType {
   allOf?: { [key: string]: any }[]
   items?: AmpliencePropertyType
   properties?: any
+  propertyOrder?: string[]
+  required?: string[]
   format?: string
   minLength?: number
   maxLength?: number
@@ -49,4 +51,15 @@ export interface AmpliencePropertyType {
   maxItems?: number
   minimum?: number
   maximum?: number
+}
+
+export interface GeneratorConfig {
+  visualizations: Visualization[]
+  schemaHost: string
+}
+
+export interface Visualization {
+  templatedUri: string
+  label: string
+  default: boolean
 }

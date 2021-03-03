@@ -54,7 +54,9 @@
               }
             }
           }
-        }
+        },
+        "required": ["title", "content"],
+        "propertyOrder": ["title", "content"]
       }
     }
   },

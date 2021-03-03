@@ -19,7 +19,8 @@
           {
             "$ref": "https://schema-examples.com/banner-block"
           }
-        ]
+        ],
+        "type": "object"
       }
     }
   },

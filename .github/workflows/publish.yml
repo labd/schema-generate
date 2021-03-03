@@ -12,6 +12,9 @@ jobs:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm install
+      - run: npm build
+      - run: cp package.json dist
+      - run: cd dist
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

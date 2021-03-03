@@ -18,7 +18,7 @@ export interface NavigationLink {
   /**
    * A reference to a page you would like to link to.
    */
-  value: ContentReference<HomePage, InformationPage, ProductOverviewPage>
+  value: ContentReference<HomePage | InformationPage | ProductOverviewPage>
   /**
    * The label that will be displayed for this link.
    * @minLength 3

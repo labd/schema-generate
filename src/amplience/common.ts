@@ -1,13 +1,25 @@
 /* eslint-disable import/no-named-as-default-member */
-import { AmplienceContentType, AmplienceContentTypeSettings, AmpliencePropertyType } from './types'
+import {
+  AmplienceContentType,
+  AmplienceContentTypeSettings,
+  AmpliencePropertyType,
+  GeneratorConfig,
+} from './types'
 import { capitalCase, paramCase } from 'change-case'
-import { maybeToNumber, findTag, hasTypeFlag, hasTag, switchArray } from '../lib/util'
+import {
+  maybeToNumber,
+  findTag,
+  hasTypeFlag,
+  hasTag,
+  switchArray,
+  hasSymbolFlag,
+} from '../lib/util'
 import ts from 'typescript'
 
 export const contentTypeSchema = (
   type: ts.Type,
-  schemaHost: string,
-  validationLevel: 'CONTENT_TYPE' | 'PARTIAL' | 'SLOT'
+  validationLevel: 'CONTENT_TYPE' | 'PARTIAL' | 'SLOT',
+  { schemaHost }: GeneratorConfig
 ): AmplienceContentType => ({
   body: `./schemas/${paramCase(type.symbol.name)}-schema.json`,
   schemaId: typeUri(type, schemaHost),
@@ -16,8 +28,8 @@ export const contentTypeSchema = (
 
 export const contentType = (
   type: ts.Type,
-  schemaHost: string,
-  icon = 'https://bigcontent.io/cms/icons/ca-types-primitives.png'
+  icon = 'https://bigcontent.io/cms/icons/ca-types-primitives.png',
+  { schemaHost, visualizations }: GeneratorConfig
 ): AmplienceContentTypeSettings => ({
   contentTypeUri: typeUri(type, schemaHost),
   status: 'ACTIVE',
@@ -29,7 +41,7 @@ export const contentType = (
         url: icon,
       },
     ],
-    visualizations: [],
+    visualizations,
     cards: [],
   },
 })
@@ -81,28 +93,21 @@ export const ampliencePropertyType = (
             (type.aliasSymbol?.name ?? type.symbol?.name) as 'AmplienceImage' | 'AmplienceVideo'
           ]
         )
-      : {
-          type: 'object',
-          ...refType(
-            AMPLIENCE_TYPE.CORE[
-              (type.aliasSymbol?.name ?? type.symbol?.name) as 'AmplienceImage' | 'AmplienceVideo'
-            ]
-          ),
-        }
+      : refType(
+          AMPLIENCE_TYPE.CORE[
+            (type.aliasSymbol?.name ?? type.symbol?.name) as 'AmplienceImage' | 'AmplienceVideo'
+          ]
+        )
+    : hasTag(prop, 'link')
+    ? contentLink(type as ts.TypeReference, schemaHost)
     : hasTypeFlag(type, ts.TypeFlags.Object)
     ? ['ContentReference'].includes(type.symbol.name)
-      ? {
-          type: 'object',
-          ...refType(
-            AMPLIENCE_TYPE.CORE[type.symbol.name as 'ContentReference'],
-            enumProperties(type as ts.TypeReference, schemaHost)
-          ),
-        }
+      ? contentReference(type as ts.TypeReference, schemaHost)
       : hasTag(type.symbol, 'partial')
       ? refType(definitionUri(type, schemaHost))
       : hasTag(type.symbol, 'content')
-      ? refType(typeUri(type, schemaHost))
-      : { type: 'object', properties: objectProperties(type, checker, schemaHost) }
+      ? inlineContentLink(type as ts.TypeReference, schemaHost)
+      : inlineObject(type, checker, schemaHost)
     : hasTypeFlag(type, ts.TypeFlags.String)
     ? checkLocalized(prop, {
         type: 'string',
@@ -122,14 +127,33 @@ export const ampliencePropertyType = (
     ? { type: 'string', enum: type.types.map((t) => (t as ts.StringLiteralType).value) }
     : {}
 
-const enumProperties = (type: ts.TypeReference, schemaHost: string) => ({
+const contentReference = (type: ts.TypeReference, schemaHost: string) =>
+  refType(AMPLIENCE_TYPE.CORE.ContentReference, enumProperties(type.typeArguments![0], schemaHost))
+
+const contentLink = (type: ts.TypeReference, schemaHost: string) =>
+  refType(AMPLIENCE_TYPE.CORE.ContentLink, enumProperties(type, schemaHost))
+
+const inlineContentLink = (type: ts.TypeReference, schemaHost: string) => ({
+  type: 'object',
+  ...refType(typeUri(type, schemaHost)),
+})
+
+const inlineObject = (type: ts.Type, checker: ts.TypeChecker, schemaHost: string) => ({
+  type: 'object',
+  properties: objectProperties(type, checker, schemaHost),
+  propertyOrder: type.getProperties().map((n) => n.name),
+  required: type
+    .getProperties()
+    .filter((m) => !hasSymbolFlag(m, ts.SymbolFlags.Optional))
+    .map((n) => n.name),
+})
+
+const enumProperties = (typeOrUnion: ts.Type, schemaHost: string) => ({
   properties: {
     contentType: {
-      enum: type.typeArguments
-        // filter out the default `object` arguments
-        ?.filter((a) => a.isUnion() || a.symbol)
-        .flatMap((a) => (a.isUnion() ? a.types : [a]))
-        .map((a) => typeUri(a, schemaHost)),
+      enum: (typeOrUnion.isUnion() ? typeOrUnion.types : [typeOrUnion]).map((t) =>
+        typeUri(t, schemaHost)
+      ),
     },
   },
 })
@@ -162,6 +186,7 @@ export const AMPLIENCE_TYPE = {
     AmplienceImage: 'http://bigcontent.io/cms/schema/v1/core#/definitions/image-link',
     AmplienceVideo: 'http://bigcontent.io/cms/schema/v1/core#/definitions/video-link',
     ContentReference: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference',
+    ContentLink: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content-link',
   },
 }
 

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import { AmplienceContentTypeSchema } from './types'
+import { AmplienceContentTypeSchema, GeneratorConfig } from './types'
 import { typeUri, refType, AMPLIENCE_TYPE, objectProperties, description } from './common'
 import { capitalCase } from 'change-case'
 import { hasSymbolFlag } from '../lib/util'
@@ -11,7 +11,7 @@ import ts from 'typescript'
 export const contentTypeSchemaBody = (
   type: ts.Type,
   checker: ts.TypeChecker,
-  schemaHost: string
+  { schemaHost }: GeneratorConfig
 ): AmplienceContentTypeSchema => ({
   $id: typeUri(type, schemaHost),
   $schema: 'http://json-schema.org/draft-07/schema#',

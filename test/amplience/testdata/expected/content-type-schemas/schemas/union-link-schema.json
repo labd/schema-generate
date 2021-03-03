@@ -16,7 +16,6 @@
       "type": "object",
       "properties": {
         "page": {
-          "type": "object",
           "title": "Page",
           "allOf": [
             {
@@ -35,7 +34,9 @@
             }
           ]
         }
-      }
+      },
+      "required": ["page"],
+      "propertyOrder": ["page"]
     }
   }
 }

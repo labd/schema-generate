@@ -23,15 +23,16 @@
           ]
         },
         "image2": {
+          "title": "Image2",
           "allOf": [
             {
               "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/image-link"
             }
-          ],
-          "title": "Image2",
-          "type": "object"
+          ]
         }
-      }
+      },
+      "required": ["image", "image2"],
+      "propertyOrder": ["image", "image2"]
     }
   }
 }

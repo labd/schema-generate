@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema-examples.com/content-link",
+  "title": "Content Link",
+  "description": "Content Link",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "content-link": {
+      "title": "Content Link",
+      "type": "object",
+      "properties": {
+        "test": {
+          "title": "Test",
+          "allOf": [
+            {
+              "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-link"
+            },
+            {
+              "properties": {
+                "contentType": {
+                  "enum": ["https://schema-examples.com/some-content"]
+                }
+              }
+            }
+          ]
+        },
+        "test2": {
+          "title": "Test2",
+          "allOf": [
+            {
+              "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-link"
+            },
+            {
+              "properties": {
+                "contentType": {
+                  "enum": [
+                    "https://schema-examples.com/some-content",
+                    "https://schema-examples.com/some-other-content"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": ["test", "test2"],
+      "propertyOrder": ["test", "test2"]
+    }
+  }
+}
