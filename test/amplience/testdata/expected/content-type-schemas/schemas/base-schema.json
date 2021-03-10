@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema-examples.com/base",
+  "title": "Base",
+  "description": "Base",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "base": {
+      "title": "Base",
+      "type": "object",
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 4,
+          "examples": ["one example", "another example"]
+        },
+        "optionalText": {
+          "title": "Optional Text",
+          "type": "string"
+        },
+        "textList": {
+          "title": "Text List",
+          "minItems": 1,
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optionalTextList": {
+          "title": "Optional Text List",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "boolean": {
+          "title": "Boolean",
+          "type": "boolean"
+        },
+        "integer": {
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Integer",
+          "type": "integer"
+        },
+        "optionalInteger": {
+          "title": "Optional Integer",
+          "type": "integer"
+        }
+      },
+      "required": ["text", "textList", "integer", "boolean"],
+      "propertyOrder": [
+        "text",
+        "optionalText",
+        "textList",
+        "optionalTextList",
+        "integer",
+        "optionalInteger",
+        "boolean"
+      ]
+    }
+  }
+}

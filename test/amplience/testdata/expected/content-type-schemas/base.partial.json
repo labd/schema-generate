@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/base-schema.json",
+  "schemaId": "https://schema-examples.com/base",
+  "validationLevel": "PARTIAL"
+}

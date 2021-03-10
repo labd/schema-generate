@@ -10,7 +10,7 @@
     "baseUrl": "src",
     "strict": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "moduleResolution": "node",
     "esModuleInterop": true,

@@ -114,17 +114,23 @@ export const ampliencePropertyType = (
         format: findTag(prop, 'format')?.text,
         minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
         maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
+        examples: findTag(prop, 'example')?.text?.split('\n'),
       })
     : hasTypeFlag(type, ts.TypeFlags.Number)
     ? {
-        type: 'number',
+        type: hasTag(prop, 'float') ? 'number' : 'integer',
         minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
         maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
+        examples: findTag(prop, 'example')?.text?.split('\n'),
       }
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
     ? { type: 'boolean' }
     : type.isUnion() && type.types.every((t) => t.isStringLiteral())
-    ? { type: 'string', enum: type.types.map((t) => (t as ts.StringLiteralType).value) }
+    ? {
+        type: 'string',
+        enum: type.types.map((t) => (t as ts.StringLiteralType).value),
+        examples: findTag(prop, 'example')?.text?.split('\n'),
+      }
     : {}
 
 const contentReference = (type: ts.TypeReference, schemaHost: string) =>
