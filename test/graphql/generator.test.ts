@@ -11,6 +11,7 @@ it.each([
   'union_types',
   'dummy_types',
   'enum_types',
+  'directives',
   //
 ])('generates correct %s', (name) => {
   const { result, expected } = compare(name)

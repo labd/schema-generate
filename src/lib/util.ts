@@ -18,6 +18,9 @@ export const hasTag = (symbol: ts.Symbol, name: string) =>
 export const findTag = (symbol: ts.Symbol, name: string) =>
   symbol.getJsDocTags().find((t) => t.name === name)
 
+export const findTags = (symbol: ts.Symbol, name: string) =>
+  symbol.getJsDocTags().filter((t) => t.name === name)
+
 export const hasTypeFlag = (type: ts.Type, flag: ts.TypeFlags) => (type.flags & flag) === flag
 
 export const hasSymbolFlag = (symbol: ts.Symbol, flag: ts.SymbolFlags) =>

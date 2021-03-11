@@ -6,6 +6,7 @@ import {
   hasTypeFlag,
   isValue,
   switchArray,
+  findTags,
 } from '../lib/util'
 import ts from 'typescript'
 
@@ -63,7 +64,7 @@ const toScalar = (type: ts.IntersectionType) => `scalar ${type.aliasSymbol!.name
  */
 const toTypeString = (type: ts.InterfaceType, checker: ts.TypeChecker) => `type ${
   type.symbol.name
-} {
+}${getDirectives(type.symbol)} {
 ${type
   .getProperties()
   .map(
@@ -72,7 +73,7 @@ ${type
         prop,
         checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration),
         checker
-      )}`
+      )}${getDirectives(prop)}`
   )
   .join('\n')}
 }`
@@ -121,3 +122,8 @@ const getName = (prop: ts.Symbol, type: ts.Type) =>
     : ''
 
 const maybeRequired = (prop: ts.Symbol) => (hasSymbolFlag(prop, ts.SymbolFlags.Optional) ? '' : '!')
+
+const getDirectives = (prop: ts.Symbol) =>
+  findTags(prop, 'directive')
+    .map((d) => ` @${d.text}`)
+    .join('')
