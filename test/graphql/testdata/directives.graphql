@@ -1,0 +1,3 @@
+type A @cacheControl(maxAge: 20) {
+  b: Int! @cacheControl(maxAge: 10, scope: PRIVATE)
+}
