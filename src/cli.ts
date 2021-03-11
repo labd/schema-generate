@@ -4,6 +4,7 @@ import { generateGraphqlTypes } from './graphql'
 import { Command } from 'commander'
 import { generateAmplienceSchemas } from './amplience'
 import { readConfig, writeContentTypeToDir } from './amplience/io'
+import { importContentItems } from './amplience/data-sync/client'
 
 const watchIf = <T>(shouldWatch: boolean, files: string[], callback: () => T) =>
   shouldWatch ? files.forEach((file) => fs.watchFile(file, callback)) : callback()
@@ -51,5 +52,10 @@ program
           )
     )
   )
+
+program
+  .command('amplience-import <dir>')
+  .description('Generate Amplience types')
+  .action((dir: string) => importContentItems(dir))
 
 program.parse(process.argv)
