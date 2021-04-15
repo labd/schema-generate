@@ -109,7 +109,7 @@ export const ampliencePropertyType = (
       ? inlineContentLink(type as ts.TypeReference, schemaHost)
       : inlineObject(type, checker, schemaHost)
     : hasTypeFlag(type, ts.TypeFlags.String)
-    ? checkLocalized(prop, {
+    ? checkLocalized(prop, type, {
         type: 'string',
         format: findTag(prop, 'format')?.text,
         minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
@@ -117,16 +117,16 @@ export const ampliencePropertyType = (
         examples: findTag(prop, 'example')?.text?.split('\n'),
       })
     : hasTypeFlag(type, ts.TypeFlags.Number)
-    ? checkLocalized(prop, {
+    ? checkLocalized(prop, type, {
         type: hasTag(prop, 'float') ? 'number' : 'integer',
         minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
         maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
         examples: findTag(prop, 'example')?.text?.split('\n'),
       })
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
-    ? checkLocalized(prop, { type: 'boolean' })
+    ? checkLocalized(prop, type, { type: 'boolean' })
     : type.isUnion() && type.types.every((t) => t.isStringLiteral())
-    ? checkLocalized(prop, {
+    ? checkLocalized(prop, type, {
         type: 'string',
         enum: type.types.map((t) => (t as ts.StringLiteralType).value),
         examples: findTag(prop, 'example')?.text?.split('\n'),
@@ -167,9 +167,9 @@ const enumProperties = (typeOrUnion: ts.Type, schemaHost: string) => ({
 /**
  * Wraps a Amplience type object in localized JSON
  */
-export const checkLocalized = (prop: ts.Symbol, result: AmpliencePropertyType) =>
+export const checkLocalized = (prop: ts.Symbol, type: ts.Type, result: AmpliencePropertyType) =>
   hasTag(prop, 'localized')
-    ? prop.getJsDocTags().length === 1
+    ? prop.getJsDocTags().length === 1 && hasTypeFlag(type, ts.TypeFlags.String)
       ? refType(AMPLIENCE_TYPE.LOCALIZED.String)
       : localized(result)
     : result
