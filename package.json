@@ -1,5 +1,5 @@
 {
-  "version": "0.1.10",
+  "version": "0.1.11",
   "license": "MIT",
   "name": "schema-generate",
   "author": "Kors van Loon",
@@ -26,8 +26,10 @@
     "dc-management-sdk-js": "1.10.0",
     "dotenv": "8.2.0",
     "jsonschema": "^1.4.0",
+    "migrate": "^1.7.0",
+    "ts-functional-pipe": "^3.1.0",
     "ts-node": "^9.1.1",
-    "typescript": "^4.0.3",
+    "typescript": "^4.2.3",
     "yaml": "^1.10.0"
   },
   "devDependencies": {

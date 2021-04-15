@@ -1,0 +1,543 @@
+{
+  "id": "b5d617c2-1cd6-4a23-83e1-296b7dcfb700",
+  "contentRepositoryId": "5f9177ba4cedfd000193ea78",
+  "folderId": null,
+  "body": {
+    "_meta": {
+      "name": "Site Footer",
+      "schema": "https://schema-examples.com/site-footer",
+      "deliveryKey": "site-footer"
+    },
+    "usps": [
+      {
+        "label": {
+          "values": [
+            {
+              "locale": "nl-NL",
+              "value": "Snelle levering uit eigen voorraad"
+            },
+            {
+              "locale": "nl-BE",
+              "value": "Snelle levering uit eigen voorraad"
+            },
+            {
+              "locale": "en-IE",
+              "value": "Fast delivery from our own stock"
+            },
+            {
+              "locale": "en-GB",
+              "value": "Fast delivery from our own stock"
+            },
+            {
+              "locale": "en-US",
+              "value": "Fast delivery from our own stock"
+            },
+            {
+              "locale": "fr-BE",
+              "value": "Livraison rapide depuis notre propre stock"
+            },
+            {
+              "locale": "fr-FR",
+              "value": "Livraison rapide depuis notre propre stock"
+            },
+            {
+              "locale": "de-AT",
+              "value": "Schnelle Lieferung aus unserem eigenen Lager"
+            },
+            {
+              "locale": "de-DE",
+              "value": "Schnelle Lieferung aus unserem eigenen Lager"
+            },
+            {
+              "locale": "it-IT",
+              "value": "Consegna rapida dal nostro magazzino"
+            },
+            {
+              "locale": "es-ES",
+              "value": "Entrega rápida de nuestro propio stock"
+            }
+          ],
+          "_meta": {
+            "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+          }
+        }
+      },
+      {
+        "label": {
+          "values": [
+            {
+              "locale": "nl-NL",
+              "value": "Keuze uit meer dan 11.000 producten"
+            },
+            {
+              "locale": "nl-BE",
+              "value": "Keuze uit meer dan 11.000 producten"
+            },
+            {
+              "locale": "en-IE",
+              "value": "Choose from more than 11,000 products"
+            },
+            {
+              "locale": "en-GB",
+              "value": "Choose from more than 11,000 products"
+            },
+            {
+              "locale": "en-US",
+              "value": "Choose from more than 11,000 products"
+            },
+            {
+              "locale": "fr-BE",
+              "value": "Choisissez parmi plus de 11000 produits"
+            },
+            {
+              "locale": "fr-FR",
+              "value": "Choisissez parmi plus de 11000 produits"
+            },
+            {
+              "locale": "de-AT",
+              "value": "Wählen Sie aus mehr als 11.000 Produkten"
+            },
+            {
+              "locale": "de-DE",
+              "value": "Wählen Sie aus mehr als 11.000 Produkten"
+            },
+            {
+              "locale": "it-IT",
+              "value": "Scegli tra più di 11.000 prodotti"
+            },
+            {
+              "locale": "es-ES",
+              "value": "Elija entre más de 11.000 productos"
+            }
+          ],
+          "_meta": {
+            "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+          }
+        }
+      },
+      {
+        "label": {
+          "values": [
+            {
+              "locale": "nl-NL",
+              "value": "Liefhebbers van kwaliteitsproducten"
+            },
+            {
+              "locale": "nl-BE",
+              "value": "Liefhebbers van kwaliteitsproducten"
+            },
+            {
+              "locale": "en-IE",
+              "value": "Lovers of quality products"
+            },
+            {
+              "locale": "en-GB",
+              "value": "Lovers of quality products"
+            },
+            {
+              "locale": "en-US",
+              "value": "Lovers of quality products"
+            },
+            {
+              "locale": "fr-BE",
+              "value": "Amateurs de produits de qualité"
+            },
+            {
+              "locale": "fr-FR",
+              "value": "Amateurs de produits de qualité"
+            },
+            {
+              "locale": "de-AT",
+              "value": "Liebhaber von Qualitätsprodukten"
+            },
+            {
+              "locale": "de-DE",
+              "value": "Liebhaber von Qualitätsprodukten"
+            },
+            {
+              "locale": "it-IT",
+              "value": "Amanti dei prodotti di qualità"
+            },
+            {
+              "locale": "es-ES",
+              "value": "Amantes de los productos de calidad"
+            }
+          ],
+          "_meta": {
+            "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+          }
+        }
+      },
+      {
+        "label": {
+          "values": [
+            {
+              "locale": "nl-NL",
+              "value": "Binnen 30 dagen gratis retourneren"
+            },
+            {
+              "locale": "nl-BE",
+              "value": "Binnen 30 dagen gratis retourneren"
+            },
+            {
+              "locale": "en-IE",
+              "value": "Free returns within 30 days"
+            },
+            {
+              "locale": "en-GB",
+              "value": "Free returns within 30 days"
+            },
+            {
+              "locale": "en-US",
+              "value": "Free returns within 30 days"
+            },
+            {
+              "locale": "fr-BE",
+              "value": "Retours gratuits sous 30 jours"
+            },
+            {
+              "locale": "fr-FR",
+              "value": "Retours gratuits sous 30 jours"
+            },
+            {
+              "locale": "de-AT",
+              "value": "Kostenlose Rücksendung innerhalb von 30 Tagen"
+            },
+            {
+              "locale": "de-DE",
+              "value": "Kostenlose Rücksendung innerhalb von 30 Tagen"
+            },
+            {
+              "locale": "it-IT",
+              "value": "Resi gratuiti entro 30 giorni"
+            },
+            {
+              "locale": "es-ES",
+              "value": "Devoluciones gratuitas en 30 días"
+            }
+          ],
+          "_meta": {
+            "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+          }
+        }
+      }
+    ],
+    "navigation": [
+      {
+        "links": [
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Contact opnemen"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Bestellen"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Betaling"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Levering"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Ruilen, retourneren & garantie"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Graveren"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Cadeaubonnen"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          }
+        ],
+        "title": "Klantenservice"
+      },
+      {
+        "links": [
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Over ons"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Showroom"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": false,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Zakelijk bestellen"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": true,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Vacatures"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": true,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Privacyverklaring"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": true,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Voorwaarden"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          },
+          {
+            "page": {
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+              },
+              "contentType": "https://schema-examples.com/information-page",
+              "id": "5f4e2ee3-f077-4234-a204-7a79f06df3f5"
+            },
+            "newTab": true,
+            "label": {
+              "values": [
+                {
+                  "locale": "nl-NL",
+                  "value": "Cookies"
+                }
+              ],
+              "_meta": {
+                "schema": "http://bigcontent.io/cms/schema/v1/core#/definitions/localized-value"
+              }
+            }
+          }
+        ],
+        "title": "Knivesandtools"
+      }
+    ]
+  },
+  "version": 6,
+  "label": "Site Footer",
+  "status": "ACTIVE",
+  "createdBy": "57b8b737-7acd-406b-8869-95ae11ae6820",
+  "locale": "nl-NL",
+  "createdDate": "2021-03-04T19:39:48.614Z",
+  "lastModifiedBy": "50a4251e-309b-4e48-8093-278f38ccd419",
+  "lastModifiedDate": "2021-03-05T11:02:28.876Z",
+  "lastPublishedVersion": 6,
+  "lastPublishedDate": "2021-03-05T11:02:51.840Z",
+  "deliveryId": "b5d617c2-1cd6-4a23-83e1-296b7dcfb700"
+}

@@ -1,0 +1,72 @@
+{
+  "$id": "https://schema-examples.com/site-footer",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "title": "Site Footer",
+  "description": "Site Footer",
+  "type": "object",
+  "properties": {
+    "usps": {
+      "title": "Usps",
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "allOf": [
+          {
+            "$ref": "https://schema-examples.com/usp#/definitions/usp"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "title": "Navigation",
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "title": "Title",
+            "type": "string",
+            "maxLength": 20
+          },
+          "links": {
+            "title": "Links",
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 7,
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "https://schema-examples.com/link#/definitions/link"
+                }
+              ]
+            }
+          }
+        },
+        "propertyOrder": [
+          "title",
+          "links"
+        ],
+        "required": [
+          "title",
+          "links"
+        ]
+      }
+    }
+  },
+  "propertyOrder": [
+    "usps",
+    "navigation"
+  ],
+  "required": [
+    "usps",
+    "navigation"
+  ]
+}

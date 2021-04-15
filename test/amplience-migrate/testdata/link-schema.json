@@ -1,0 +1,63 @@
+{
+  "$id": "https://schema-examples.com/link",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "title": "Link",
+  "description": "Link",
+  "type": "object",
+  "definitions": {
+    "link": {
+      "title": "Link",
+      "type": "object",
+      "properties": {
+        "page": {
+          "title": "Page",
+          "allOf": [
+            {
+              "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference"
+            },
+            {
+              "properties": {
+                "contentType": {
+                  "enum": [
+                    "https://schema-examples.com/home-page",
+                    "https://schema-examples.com/information-page",
+                    "https://schema-examples.com/topic-detail-page",
+                    "https://schema-examples.com/topic-overview-page",
+                    "https://schema-examples.com/product-overview-page"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "label": {
+          "title": "Label",
+          "allOf": [
+            {
+              "$ref": "http://bigcontent.io/cms/schema/v1/localization#/definitions/localized-string"
+            }
+          ]
+        },
+        "newTab": {
+          "title": "New Tab",
+          "type": "boolean"
+        }
+      },
+      "propertyOrder": [
+        "page",
+        "label",
+        "newTab"
+      ],
+      "required": [
+        "page",
+        "label",
+        "newTab"
+      ]
+    }
+  }
+}

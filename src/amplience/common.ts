@@ -117,20 +117,20 @@ export const ampliencePropertyType = (
         examples: findTag(prop, 'example')?.text?.split('\n'),
       })
     : hasTypeFlag(type, ts.TypeFlags.Number)
-    ? {
+    ? checkLocalized(prop, {
         type: hasTag(prop, 'float') ? 'number' : 'integer',
         minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
         maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
         examples: findTag(prop, 'example')?.text?.split('\n'),
-      }
+      })
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
-    ? { type: 'boolean' }
+    ? checkLocalized(prop, { type: 'boolean' })
     : type.isUnion() && type.types.every((t) => t.isStringLiteral())
-    ? {
+    ? checkLocalized(prop, {
         type: 'string',
         enum: type.types.map((t) => (t as ts.StringLiteralType).value),
         examples: findTag(prop, 'example')?.text?.split('\n'),
-      }
+      })
     : {}
 
 const contentReference = (type: ts.TypeReference, schemaHost: string) =>
