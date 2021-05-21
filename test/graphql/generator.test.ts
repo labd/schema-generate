@@ -7,12 +7,12 @@ const compare = (name: string) => ({
 })
 
 it.each([
-  'basic_types',
-  'union_types',
-  'dummy_types',
-  'enum_types',
-  'directives',
-  //
+  // 'basic_types',
+  // 'union_types',
+  // 'dummy_types',
+  // 'enum_types',
+  // 'directives',
+  'localized_types',
 ])('generates correct %s', (name) => {
   const { result, expected } = compare(name)
   expect(result).toContain(expected)

@@ -1,0 +1,8 @@
+scalar LocalizedString
+type A {
+  a: LocalizedString!
+  b: B!
+}
+type B {
+  a: String!
+}
