@@ -28,7 +28,7 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
 
   return (
     [
-      `scalar LocalizedString`,
+      `scalar AmplienceLocalizedString`,
       ...exportedIntersectionTypes.map(toScalar),
       ...exportedUnionTypes.map(toUnionString),
       ...exportedInterfaces.map((type) => toTypeString(type, checker)),
@@ -110,7 +110,7 @@ const getName = (prop: ts.Symbol, type: ts.Type) =>
     ? prop.name === 'id'
       ? 'ID'
       : hasTag(prop, 'localized')
-      ? 'LocalizedString'
+      ? 'AmplienceLocalizedString'
       : 'String'
     : hasTypeFlag(type, ts.TypeFlags.Number)
     ? hasTag(prop, 'float')
