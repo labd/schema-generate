@@ -127,6 +127,6 @@ const getName = (prop: ts.Symbol, type: ts.Type) =>
 const maybeRequired = (prop: ts.Symbol) => (hasSymbolFlag(prop, ts.SymbolFlags.Optional) ? '' : '!')
 
 const getDirectives = (prop: ts.Symbol) =>
-  findTags(prop, 'directive')
+  findTags(prop, ['directive', 'format'])
     .map((d) => ` @${d.text}`)
     .join('')

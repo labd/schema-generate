@@ -1,0 +1,5 @@
+scalar AmplienceLocalizedString
+type A {
+  a: String! @markdown
+  b: AmplienceLocalizedString! @markdown
+}
