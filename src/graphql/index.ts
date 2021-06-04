@@ -28,6 +28,7 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
 
   return (
     [
+      `directive @markdown on FIELD_DEFINITION`,
       `scalar AmplienceLocalizedString`,
       ...exportedIntersectionTypes.map(toScalar),
       ...exportedUnionTypes.map(toUnionString),
@@ -128,5 +129,6 @@ const maybeRequired = (prop: ts.Symbol) => (hasSymbolFlag(prop, ts.SymbolFlags.O
 
 const getDirectives = (prop: ts.Symbol) =>
   findTags(prop, ['directive', 'format'])
-    .map((d) => ` @${d.text}`)
+    .filter((t) => t.name !== 'format' || t.text === 'markdown')
+    .map((t) => ` @${t.text}`)
     .join('')

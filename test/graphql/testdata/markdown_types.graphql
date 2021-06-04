@@ -1,3 +1,4 @@
+directive @markdown on FIELD_DEFINITION
 scalar AmplienceLocalizedString
 type A {
   a: String! @markdown
