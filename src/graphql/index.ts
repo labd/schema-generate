@@ -69,6 +69,7 @@ const toTypeString = (type: ts.InterfaceType, checker: ts.TypeChecker) => `type 
 }${getDirectives(type.symbol)} {
 ${type
   .getProperties()
+  .filter((prop) => !hasTag(prop, 'ignore'))
   .map(
     (prop) =>
       `  ${prop.name}: ${toPropertyType(
@@ -119,7 +120,7 @@ const getName = (prop: ts.Symbol, type: ts.Type) =>
       : 'Int'
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
     ? 'Boolean'
-    : hasTypeFlag(type, ts.TypeFlags.Object)
+    : hasTypeFlag(type, ts.TypeFlags.Object) && type.symbol
     ? type.symbol.name
     : hasTypeFlag(type, ts.TypeFlags.Union)
     ? type.aliasSymbol!.name

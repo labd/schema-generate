@@ -4,6 +4,10 @@ export interface A {
   c: string[]
   d?: string[]
   e: number
+  /** @ignore */
+  constString: 'const'
+  /** @ignore */
+  constArray: ['this', 'is', 'const']
 }
 
 export interface B {

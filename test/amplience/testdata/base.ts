@@ -22,4 +22,6 @@ export interface Base {
   integer: number
   optionalInteger?: number
   boolean: boolean
+  constString: 'const'
+  constArray: ['this', 'is', 'const']
 }

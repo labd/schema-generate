@@ -101,12 +101,20 @@ export const ampliencePropertyType = (
     : hasTag(prop, 'link')
     ? contentLink(type as ts.TypeReference, schemaHost)
     : hasTypeFlag(type, ts.TypeFlags.Object)
-    ? ['ContentReference'].includes(type.symbol.name)
+    ? ['ContentReference'].includes(type.symbol?.name)
       ? contentReference(type as ts.TypeReference, schemaHost)
-      : hasTag(type.symbol, 'partial')
+      : type.symbol && hasTag(type.symbol, 'partial')
       ? refType(definitionUri(type, schemaHost))
-      : hasTag(type.symbol, 'content')
+      : type.symbol && hasTag(type.symbol, 'content')
       ? inlineContentLink(type as ts.TypeReference, schemaHost)
+      : !type.symbol
+      ? {
+          type: 'array',
+          items: { type: 'string' },
+          const: (type as ts.TypeReference).typeArguments
+            ?.filter((t) => t.isStringLiteral())
+            .map((t) => t.isStringLiteral() && t.value),
+        }
       : inlineObject(type, checker, schemaHost)
     : hasTypeFlag(type, ts.TypeFlags.String)
     ? checkLocalized(prop, type, {
@@ -125,6 +133,8 @@ export const ampliencePropertyType = (
       })
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
     ? checkLocalized(prop, type, { type: 'boolean' })
+    : hasTypeFlag(type, ts.TypeFlags.StringLiteral)
+    ? { type: 'string', const: (type as ts.StringLiteralType).value }
     : type.isUnion() && type.types.every((t) => t.isStringLiteral())
     ? checkLocalized(prop, type, {
         type: 'string',

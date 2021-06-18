@@ -38,6 +38,7 @@ export interface AmpliencePropertyType {
   title?: string
   description?: string
   type?: string
+  const?: any
   enum?: string[]
   allOf?: { [key: string]: any }[]
   items?: AmpliencePropertyType

@@ -54,9 +54,22 @@
         "optionalInteger": {
           "title": "Optional Integer",
           "type": "integer"
+        },
+        "constString": {
+          "title": "Const String",
+          "type": "string",
+          "const": "const"
+        },
+        "constArray": {
+          "title": "Const Array",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "const": ["this", "is", "const"]
         }
       },
-      "required": ["text", "textList", "integer", "boolean"],
+      "required": ["text", "textList", "integer", "boolean", "constString", "constArray"],
       "propertyOrder": [
         "text",
         "optionalText",
@@ -64,7 +77,9 @@
         "optionalTextList",
         "integer",
         "optionalInteger",
-        "boolean"
+        "boolean",
+        "constString",
+        "constArray"
       ]
     }
   }
