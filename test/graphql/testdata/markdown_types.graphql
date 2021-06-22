@@ -2,5 +2,5 @@ directive @markdown on FIELD_DEFINITION
 scalar AmplienceLocalizedString
 type A {
   a: String! @markdown
-  b: AmplienceLocalizedString! @markdown
+  b: AmplienceLocalizedString @markdown
 }

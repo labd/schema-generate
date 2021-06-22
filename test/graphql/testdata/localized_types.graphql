@@ -1,6 +1,6 @@
 scalar AmplienceLocalizedString
 type A {
-  a: AmplienceLocalizedString!
+  a: AmplienceLocalizedString
   b: B!
 }
 type B {

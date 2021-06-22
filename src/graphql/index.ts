@@ -103,7 +103,7 @@ const toPropertyType = (prop: ts.Symbol, type: ts.Type, checker: ts.TypeChecker)
   switchArray(type, checker, {
     ifArray: (subType) => `[${getName(prop, subType)}!]`,
     other: (type) => getName(prop, type),
-  }) + maybeRequired(prop)
+  }) + maybeRequired(prop, type)
 
 const getName = (prop: ts.Symbol, type: ts.Type) =>
   isScalarType(type)
@@ -126,7 +126,11 @@ const getName = (prop: ts.Symbol, type: ts.Type) =>
     ? type.aliasSymbol!.name
     : ''
 
-const maybeRequired = (prop: ts.Symbol) => (hasSymbolFlag(prop, ts.SymbolFlags.Optional) ? '' : '!')
+const maybeRequired = (prop: ts.Symbol, type: ts.Type) =>
+  hasSymbolFlag(prop, ts.SymbolFlags.Optional) ||
+  (hasTag(prop, 'localized') && hasTypeFlag(type, ts.TypeFlags.String))
+    ? ''
+    : '!'
 
 const getDirectives = (prop: ts.Symbol) =>
   findTags(prop, ['directive', 'format'])
