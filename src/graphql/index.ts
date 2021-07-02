@@ -101,7 +101,7 @@ const extractScalarsFromProp = (type: ts.Type, checker: ts.TypeChecker): ts.Type
  */
 const toPropertyType = (prop: ts.Symbol, type: ts.Type, checker: ts.TypeChecker): string =>
   switchArray(type, checker, {
-    ifArray: (subType) => `[${getName(prop, subType)}!]`,
+    ifArray: (subType) => `[${getName(prop, subType)}]`,
     other: (type) => getName(prop, type),
   }) + maybeRequired(prop, type)
 
