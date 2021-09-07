@@ -27,6 +27,8 @@ export interface AmplienceContentTypeSchema {
   allOf: any[]
   title: string
   description: string
+  'trait:hierarchy'?: {},
+  'trait:sortable'?: {},
   type: 'object'
   properties?: { [name: string]: AmpliencePropertyType }
   definitions?: { [name: string]: AmpliencePropertyType }

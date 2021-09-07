@@ -55,26 +55,29 @@ export const objectProperties = (
   schemaHost: string
 ): { [name: string]: AmpliencePropertyType } =>
   Object.fromEntries(
-    type.getProperties().map((prop) => [
-      prop.name,
-      {
-        title: capitalCase(prop.name),
-        description: description(prop, checker),
-        ...switchArray<AmpliencePropertyType>(
-          checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration),
-          checker,
-          {
-            ifArray: (subType) => ({
-              type: 'array',
-              minItems: maybeToNumber(findTag(prop, 'minItems')?.text),
-              maxItems: maybeToNumber(findTag(prop, 'maxItems')?.text),
-              items: ampliencePropertyType(prop, subType, checker, schemaHost),
-            }),
-            other: (type) => ampliencePropertyType(prop, type, checker, schemaHost),
-          }
-        ),
-      },
-    ])
+    type
+      .getProperties()
+      .filter((prop) => !hasTag(prop, 'children')) // Children can not be available as a field on the object itself
+      .map((prop) => [
+        prop.name,
+        {
+          title: capitalCase(prop.name),
+          description: description(prop, checker),
+          ...switchArray<AmpliencePropertyType>(
+            checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration),
+            checker,
+            {
+              ifArray: (subType) => ({
+                type: 'array',
+                minItems: maybeToNumber(findTag(prop, 'minItems')?.text),
+                maxItems: maybeToNumber(findTag(prop, 'maxItems')?.text),
+                items: ampliencePropertyType(prop, subType, checker, schemaHost),
+              }),
+              other: (type) => ampliencePropertyType(prop, type, checker, schemaHost),
+            }
+          ),
+        },
+      ])
   )
 
 /**
@@ -203,6 +206,7 @@ export const AMPLIENCE_TYPE = {
     AmplienceVideo: 'http://bigcontent.io/cms/schema/v1/core#/definitions/video-link',
     ContentReference: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content-reference',
     ContentLink: 'http://bigcontent.io/cms/schema/v1/core#/definitions/content-link',
+    HierarchyNode: 'http://bigcontent.io/cms/schema/v2/hierarchy#/definitions/hierarchy-node',
   },
 }
 
@@ -228,3 +232,34 @@ export const typeUri = (type: ts.Type, schemaHost: string) =>
 
 export const definitionUri = (type: ts.Type, schemaHost: string) =>
   `${schemaHost}/${paramCase(type.symbol.name)}#/definitions/${paramCase(type.symbol.name)}`
+
+/**
+ * Returns sortable trait path for amplience based on properties containing the `@sortable` tag
+ * @returns Object that can be pushed to `trait:sortable` directly
+ */
+export const sortableTrait = (type: ts.Type) => ({
+  sortBy: [
+    {
+      key: 'default',
+      paths: type
+        .getProperties()
+        .filter((m) => hasTag(m, 'sortable'))
+        .map((n) => `/${n.name}`),
+    },
+  ],
+})
+
+/**
+ * Returns hierarchy trait child content types with the current type and any other
+ * types based on the `@children` tag
+ * @returns Object that can be pushed to the `trait:hierarchy` directly
+ */
+export const hierarchyTrait = (type: ts.Type, schemaHost: string) => ({
+  childContentTypes: [
+    typeUri(type, schemaHost),
+    ...type
+      .getProperties()
+      .filter((m) => hasTag(m, 'children'))
+      .map((n) => `${schemaHost}/${paramCase(n.name)}`),
+  ],
+})
