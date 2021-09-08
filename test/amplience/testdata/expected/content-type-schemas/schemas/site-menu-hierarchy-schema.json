@@ -1,0 +1,54 @@
+{
+  "$id": "https://schema-examples.com/site-menu-hierarchy",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    },
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v2/hierarchy#/definitions/hierarchy-node"
+    }
+  ],
+  "title": "Site Menu Hierarchy",
+  "description": "Site Menu Hierarchy",
+  "trait:hierarchy": {
+    "childContentTypes": [
+      "https://schema-examples.com/site-menu-hierarchy",
+      "https://schema-examples.com/title-only-item"
+    ]
+  },
+  "trait:sortable": {
+    "sortBy": [
+      {
+        "key": "default",
+        "paths": [
+          "/order"
+        ]
+      }
+    ]
+  },
+  "type": "object",
+  "properties": {
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "order": {
+      "title": "Order",
+      "type": "integer"
+    }
+  },
+  "propertyOrder": [
+    "title",
+    "description",
+    "order"
+  ],
+  "required": [
+    "title",
+    "order"
+  ]
+}

@@ -5,7 +5,7 @@ import { findTag, getExportedTypes, hasTag, isValue } from '../lib/util'
 import ts from 'typescript'
 import { AmplienceContentTypeJsonFiles, GeneratorConfig } from './types'
 import { contentTypeSchema, contentType } from './common'
-import { contentTypeSchemaBody } from './content-type'
+import { contentTypeSchemaBody, hierarchyContentTypeSchemaBody } from './content-type'
 import { partialSchema } from './partial'
 import { defaultConfig } from './config'
 
@@ -29,6 +29,14 @@ export const generateAmplienceSchemas = (
         name: paramCase(type.symbol.name),
         contentTypeSchema: contentTypeSchema(type, 'CONTENT_TYPE', config),
         contentTypeSchemaBody: contentTypeSchemaBody(type, checker, config),
+        contentType: contentType(type, findTag(type.symbol, 'icon')?.text, config),
+      })),
+    ...exportedInterfaces
+      .filter((t) => hasTag(t.symbol, 'hierarchy'))
+      .map<AmplienceContentTypeJsonFiles>((type) => ({
+        name: paramCase(type.symbol.name),
+        contentTypeSchema: contentTypeSchema(type, 'CONTENT_TYPE', config),
+        contentTypeSchemaBody: hierarchyContentTypeSchemaBody(type, checker, config),
         contentType: contentType(type, findTag(type.symbol, 'icon')?.text, config),
       })),
     ...exportedInterfaces

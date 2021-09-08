@@ -1,0 +1,24 @@
+{
+  "$id": "https://schema-examples.com/title-only-item",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "title": "Title Only Item",
+  "description": "Title Only Item",
+  "type": "object",
+  "properties": {
+    "title": {
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "propertyOrder": [
+    "title"
+  ],
+  "required": [
+    "title"
+  ]
+}
