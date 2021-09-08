@@ -7,15 +7,15 @@ export interface SiteMenuItem {
   /** @sortable */
   order: number
   /**
-   * @link
    * @children
+   * Since this uses `@children` it won't be added as a field to the schema
    */
-  bla: Bla[]
+  titleOnlyItem: TitleOnlyItem[]
 }
 
 /**
  * @content
  */
-export interface Bla {
+export interface TitleOnlyItem {
   title: string
 }
