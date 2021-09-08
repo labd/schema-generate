@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/title-only-item-schema.json",
+  "schemaId": "https://schema-examples.com/title-only-item",
+  "validationLevel": "CONTENT_TYPE"
+}

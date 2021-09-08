@@ -1,7 +1,7 @@
 /**
  * @hierarchy
  */
-export interface SiteMenuItem {
+export interface SiteMenuHierarchy {
   title: string
   description?: string
   /** @sortable */

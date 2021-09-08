@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/site-menu-hierarchy-schema.json",
+  "schemaId": "https://schema-examples.com/site-menu-hierarchy",
+  "validationLevel": "CONTENT_TYPE"
+}

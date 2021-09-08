@@ -1,0 +1,15 @@
+{
+  "contentTypeUri": "https://schema-examples.com/site-menu-hierarchy",
+  "status": "ACTIVE",
+  "settings": {
+    "label": "Site Menu Hierarchy",
+    "icons": [
+      {
+        "size": 256,
+        "url": "https://bigcontent.io/cms/icons/ca-types-primitives.png"
+      }
+    ],
+    "visualizations": [],
+    "cards": []
+  }
+}
