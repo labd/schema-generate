@@ -8,6 +8,7 @@ import {
   description,
   sortableTrait,
   hierarchyTrait,
+  filterableTrait,
 } from './common'
 import { capitalCase } from 'change-case'
 import { hasSymbolFlag, hasTag } from '../lib/util'
@@ -26,6 +27,8 @@ export const contentTypeSchemaBody = (
   ...refType(AMPLIENCE_TYPE.CORE.Content),
   title: capitalCase(type.symbol.name),
   description: description(type.symbol, checker) ?? capitalCase(type.symbol.name),
+  'trait:sortable': sortableTrait(type),
+  'trait:filterable': filterableTrait(type),
   type: 'object',
   properties: {
     ...objectProperties(type, checker, schemaHost),

@@ -27,6 +27,7 @@ export interface AmplienceContentTypeSchema {
   allOf: any[]
   title: string
   description: string
+  'trait:filterable'?: {},
   'trait:hierarchy'?: {},
   'trait:sortable'?: {},
   type: 'object'
