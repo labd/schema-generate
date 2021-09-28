@@ -6,6 +6,12 @@ export interface CategoryMeta {
   description?: string
   /** @sortable */
   order: number
-    /** @filterable */
+  /** @filterable */
   prettyURL: string
+  /**
+   * @filterable
+   */
+  categoryCode: string
+  /** @filterable */
+  shortCode: string
 }

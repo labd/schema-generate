@@ -24,6 +24,41 @@
         "paths": [
           "/prettyURL"
         ]
+      },
+      {
+        "paths": [
+          "/categoryCode"
+        ]
+      },
+      {
+        "paths": [
+          "/shortCode"
+        ]
+      },
+      {
+        "paths": [
+          "/prettyURL",
+          "/categoryCode"
+        ]
+      },
+      {
+        "paths": [
+          "/prettyURL",
+          "/shortCode"
+        ]
+      },
+      {
+        "paths": [
+          "/categoryCode",
+          "/shortCode"
+        ]
+      },
+      {
+        "paths": [
+          "/prettyURL",
+          "/categoryCode",
+          "/shortCode"
+        ]
       }
     ]
   },
@@ -44,17 +79,29 @@
     "prettyURL": {
       "title": "Pretty Url",
       "type": "string"
+    },
+    "categoryCode": {
+      "title": "Category Code",
+      "type": "string"
+    },
+    "shortCode": {
+      "title": "Short Code",
+      "type": "string"
     }
   },
   "propertyOrder": [
     "title",
     "description",
     "order",
-    "prettyURL"
+    "prettyURL",
+    "categoryCode",
+    "shortCode"
   ],
   "required": [
     "title",
     "order",
-    "prettyURL"
+    "prettyURL",
+    "categoryCode",
+    "shortCode"
   ]
 }

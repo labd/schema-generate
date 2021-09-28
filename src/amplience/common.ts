@@ -13,6 +13,8 @@ import {
   hasTag,
   switchArray,
   hasSymbolFlag,
+  ifNotEmpty,
+  combinations,
 } from '../lib/util'
 import ts from 'typescript'
 
@@ -237,21 +239,15 @@ export const definitionUri = (type: ts.Type, schemaHost: string) =>
  * Returns sortable trait path for amplience based on properties containing the `@sortable` tag
  * @returns Object that can be pushed to `trait:sortable` directly
  */
-export const sortableTrait = (type: ts.Type) => {
-  const sortableProperties = type.getProperties().filter((m) => hasTag(m, 'sortable'))
-
-  if (sortableProperties.length === 0) return undefined
-
-  return {
-    sortBy: [
-      {
+export const sortableTrait = (type: ts.Type) =>
+  ifNotEmpty(type.getProperties().filter((m) => hasTag(m, 'sortable')), (items) => ({
+  sortBy: [
+    {
         key: 'default',
-        paths: sortableProperties
-          .map((n) => `/${n.name}`),
+        paths: items.map((n) => `/${n.name}`),
       },
     ]
-  }
-}
+}))
 
 /**
  * Returns hierarchy trait child content types with the current type and any other
@@ -269,20 +265,18 @@ export const hierarchyTrait = (type: ts.Type, schemaHost: string) => ({
 })
 
 /**
- * Returns filterable trait path for amplience based on properties containing the `@filterable` tag
+ * Returns filterable trait path for amplience based on properties containing the `@filterable` tag.
+ * Generates all possible combinations of the tags for multi-path filtering. Note Amplience only supports
+ * multi-path filtering up to 5 paths.
  * @returns Object that can be pushed to `trait:filterable` directly
  */
 export const filterableTrait = (type: ts.Type) => {
-  const filterableProperties = type.getProperties().filter((m) => hasTag(m, 'filterable'))
-
-  if (filterableProperties.length === 0) return undefined
+  const filterableProps = type.getProperties().filter((m) => hasTag(m, 'filterable'))
+  if (filterableProps.length === 0) return undefined
+  if (filterableProps.length > 5) throw new Error('max @filterable tags can be five')
+  const filterCombinations = combinations(filterableProps.map((s) => `/${s.name}`))
 
   return {
-    filterBy: [
-      {
-        paths: filterableProperties
-          .map((n) => `/${n.name}`),
-      },
-    ]
+    filterBy: filterCombinations.map((paths) => ({ paths }))
   }
 }
