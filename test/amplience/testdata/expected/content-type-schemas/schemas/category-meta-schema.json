@@ -1,0 +1,60 @@
+{
+  "$id": "https://schema-examples.com/category-meta",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+    }
+  ],
+  "title": "Category Meta",
+  "description": "Category Meta",
+  "trait:sortable": {
+    "sortBy": [
+      {
+        "key": "default",
+        "paths": [
+          "/order"
+        ]
+      }
+    ]
+  },
+  "trait:filterable": {
+    "filterBy": [
+      {
+        "paths": [
+          "/prettyURL"
+        ]
+      }
+    ]
+  },
+  "type": "object",
+  "properties": {
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "order": {
+      "title": "Order",
+      "type": "integer"
+    },
+    "prettyURL": {
+      "title": "Pretty Url",
+      "type": "string"
+    }
+  },
+  "propertyOrder": [
+    "title",
+    "description",
+    "order",
+    "prettyURL"
+  ],
+  "required": [
+    "title",
+    "order",
+    "prettyURL"
+  ]
+}

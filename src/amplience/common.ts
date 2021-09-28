@@ -237,17 +237,21 @@ export const definitionUri = (type: ts.Type, schemaHost: string) =>
  * Returns sortable trait path for amplience based on properties containing the `@sortable` tag
  * @returns Object that can be pushed to `trait:sortable` directly
  */
-export const sortableTrait = (type: ts.Type) => ({
-  sortBy: [
-    {
-      key: 'default',
-      paths: type
-        .getProperties()
-        .filter((m) => hasTag(m, 'sortable'))
-        .map((n) => `/${n.name}`),
-    },
-  ],
-})
+export const sortableTrait = (type: ts.Type) => {
+  const sortableProperties = type.getProperties().filter((m) => hasTag(m, 'sortable'))
+
+  if (sortableProperties.length === 0) return undefined
+
+  return {
+    sortBy: [
+      {
+        key: 'default',
+        paths: sortableProperties
+          .map((n) => `/${n.name}`),
+      },
+    ]
+  }
+}
 
 /**
  * Returns hierarchy trait child content types with the current type and any other
@@ -263,3 +267,22 @@ export const hierarchyTrait = (type: ts.Type, schemaHost: string) => ({
       .map((n) => `${schemaHost}/${paramCase(n.name)}`),
   ],
 })
+
+/**
+ * Returns filterable trait path for amplience based on properties containing the `@filterable` tag
+ * @returns Object that can be pushed to `trait:filterable` directly
+ */
+export const filterableTrait = (type: ts.Type) => {
+  const filterableProperties = type.getProperties().filter((m) => hasTag(m, 'filterable'))
+
+  if (filterableProperties.length === 0) return undefined
+
+  return {
+    filterBy: [
+      {
+        paths: filterableProperties
+          .map((n) => `/${n.name}`),
+      },
+    ]
+  }
+}

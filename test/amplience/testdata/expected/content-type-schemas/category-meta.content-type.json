@@ -1,0 +1,5 @@
+{
+  "body": "./schemas/category-meta-schema.json",
+  "schemaId": "https://schema-examples.com/category-meta",
+  "validationLevel": "CONTENT_TYPE"
+}
