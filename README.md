@@ -73,3 +73,7 @@ import { generateGraphqlTypes } from 'schema-generate/graphql'
 
 const graphqlTypeString = generateGraphqlTypes(['books.ts'])
 ```
+
+# How to release
+
+First increase the version in package.json, then use that version to create a release with that number in Github.
