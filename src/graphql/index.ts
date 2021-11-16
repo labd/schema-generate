@@ -32,7 +32,9 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
       `scalar AmplienceLocalizedString`,
       ...exportedIntersectionTypes.map(toScalar),
       ...exportedUnionTypes.map(toUnionString),
-      ...exportedInterfaces.map((type) => toTypeString(type, checker)),
+      ...exportedInterfaces
+        .filter((type) => !hasTag(type.symbol, 'ignore'))
+        .map((type) => toTypeString(type, checker)),
     ].join('\n') + '\n'
   )
 }
