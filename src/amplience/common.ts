@@ -59,7 +59,8 @@ export const objectProperties = (
   Object.fromEntries(
     type
       .getProperties()
-      .filter((prop) => !hasTag(prop, 'children')) // Children can not be available as a field on the object itself
+      // Children can not be available as a field on the object itself
+      .filter((prop) => ['children', 'ignoreAmplience'].every(term => !hasTag(prop, term)))
       .map((prop) => [
         prop.name,
         {

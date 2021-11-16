@@ -24,4 +24,6 @@ export interface Base {
   boolean: boolean
   constString: 'const'
   constArray: ['this', 'is', 'const']
+  /** @ignoreAmplience */
+  ignore: string
 }

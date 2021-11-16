@@ -3,7 +3,7 @@ import { AmplienceContentTypeSchema, GeneratorConfig } from './types'
 import { typeUri, refType, AMPLIENCE_TYPE, objectProperties, description } from './common'
 import { capitalCase, paramCase } from 'change-case'
 import ts from 'typescript'
-import { hasSymbolFlag } from '../lib/util'
+import { hasSymbolFlag, hasTag } from '../lib/util'
 
 /**
  * Returns a Amplience ContentType from an interface type.
@@ -25,9 +25,13 @@ export const partialSchema = (
       description: description(type.symbol, checker),
       type: 'object',
       properties: objectProperties(type, checker, schemaHost),
-      propertyOrder: type.getProperties().map((n) => n.name),
+      propertyOrder: type
+        .getProperties()
+        .filter((prop) => ['children', 'ignoreAmplience'].every((term) => !hasTag(prop, term)))
+        .map((n) => n.name),
       required: type
         .getProperties()
+        .filter((prop) => ['children', 'ignoreAmplience'].every((term) => !hasTag(prop, term)))
         .filter((m) => !hasSymbolFlag(m, ts.SymbolFlags.Optional))
         .map((n) => n.name),
     },
