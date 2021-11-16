@@ -18,3 +18,8 @@ it.each([
   const { result, expected } = compare(name)
   expect(result).toContain(expected)
 })
+
+it.each(['ignore_types'])('generates correct %s', (name) => {
+  const { result, expected } = compare(name)
+  expect(result).not.toContain(expected)
+})
