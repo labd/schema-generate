@@ -3,6 +3,7 @@ export interface Base {
   /**
    * @minLength 2
    * @maxLength 4
+   * @pattern ^/.*$
    * @example
    * one example
    * another example

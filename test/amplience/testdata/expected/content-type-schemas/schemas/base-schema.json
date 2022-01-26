@@ -19,6 +19,7 @@
           "type": "string",
           "minLength": 2,
           "maxLength": 4,
+          "pattern": "^/.*$",
           "examples": ["one example", "another example"]
         },
         "optionalText": {

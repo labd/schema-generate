@@ -27,9 +27,9 @@ export interface AmplienceContentTypeSchema {
   allOf: any[]
   title: string
   description: string
-  'trait:filterable'?: {},
-  'trait:hierarchy'?: {},
-  'trait:sortable'?: {},
+  'trait:filterable'?: {}
+  'trait:hierarchy'?: {}
+  'trait:sortable'?: {}
   type: 'object'
   properties?: { [name: string]: AmpliencePropertyType }
   definitions?: { [name: string]: AmpliencePropertyType }
@@ -49,6 +49,7 @@ export interface AmpliencePropertyType {
   propertyOrder?: string[]
   required?: string[]
   format?: string
+  pattern?: string
   minLength?: number
   maxLength?: number
   minItems?: number

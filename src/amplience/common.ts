@@ -60,7 +60,7 @@ export const objectProperties = (
     type
       .getProperties()
       // Children can not be available as a field on the object itself
-      .filter((prop) => ['children', 'ignoreAmplience'].every(term => !hasTag(prop, term)))
+      .filter((prop) => ['children', 'ignoreAmplience'].every((term) => !hasTag(prop, term)))
       .map((prop) => [
         prop.name,
         {
@@ -126,6 +126,7 @@ export const ampliencePropertyType = (
     ? checkLocalized(prop, type, {
         type: 'string',
         format: findTag(prop, 'format')?.text,
+        pattern: findTag(prop, 'pattern')?.text,
         minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
         maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
         examples: findTag(prop, 'example')?.text?.split('\n'),
@@ -241,14 +242,17 @@ export const definitionUri = (type: ts.Type, schemaHost: string) =>
  * @returns Object that can be pushed to `trait:sortable` directly
  */
 export const sortableTrait = (type: ts.Type) =>
-  ifNotEmpty(type.getProperties().filter((m) => hasTag(m, 'sortable')), (items) => ({
-  sortBy: [
-    {
-        key: 'default',
-        paths: items.map((n) => `/${n.name}`),
-      },
-    ]
-}))
+  ifNotEmpty(
+    type.getProperties().filter((m) => hasTag(m, 'sortable')),
+    (items) => ({
+      sortBy: [
+        {
+          key: 'default',
+          paths: items.map((n) => `/${n.name}`),
+        },
+      ],
+    })
+  )
 
 /**
  * Returns hierarchy trait child content types with the current type and any other
@@ -278,6 +282,6 @@ export const filterableTrait = (type: ts.Type) => {
   const filterCombinations = combinations(filterableProps.map((s) => `/${s.name}`))
 
   return {
-    filterBy: filterCombinations.map((paths) => ({ paths }))
+    filterBy: filterCombinations.map((paths) => ({ paths })),
   }
 }
