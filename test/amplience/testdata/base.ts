@@ -27,4 +27,16 @@ export interface Base {
   constArray: ['this', 'is', 'const']
   /** @ignoreAmplience */
   ignore: string
+  /**
+   * @default false
+   */
+  defaultBoolean: boolean
+  /**
+   * @default "this is a default string"
+   */
+  defaultString: string
+  /**
+   * @default 42
+   */
+  defaultNumber: number
 }
