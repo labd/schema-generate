@@ -57,6 +57,7 @@ export interface AmpliencePropertyType {
   minimum?: number
   maximum?: number
   examples?: string[]
+  default?: any
 }
 
 export interface GeneratorConfig {

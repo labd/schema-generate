@@ -68,9 +68,34 @@
             "type": "string"
           },
           "const": ["this", "is", "const"]
+        },
+        "defaultBoolean": {
+          "title": "Default Boolean",
+          "type": "boolean",
+          "default": false
+        },
+        "defaultString": {
+          "title": "Default String",
+          "type": "string",
+          "default": "this is a default string"
+        },
+        "defaultNumber": {
+          "title": "Default Number",
+          "type": "integer",
+          "default": 42
         }
       },
-      "required": ["text", "textList", "integer", "boolean", "constString", "constArray"],
+      "required": [
+        "text",
+        "textList",
+        "integer",
+        "boolean",
+        "constString",
+        "constArray",
+        "defaultBoolean",
+        "defaultString",
+        "defaultNumber"
+      ],
       "propertyOrder": [
         "text",
         "optionalText",
@@ -80,7 +105,10 @@
         "optionalInteger",
         "boolean",
         "constString",
-        "constArray"
+        "constArray",
+        "defaultBoolean",
+        "defaultString",
+        "defaultNumber"
       ]
     }
   }

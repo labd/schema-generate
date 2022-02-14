@@ -126,10 +126,13 @@ export const ampliencePropertyType = (
     ? checkLocalized(prop, type, {
         type: 'string',
         format: findTag(prop, 'format')?.text,
-        pattern: findTag(prop, 'pattern')?.text,
         minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
         maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
+        pattern: findTag(prop, 'pattern')?.text,
         examples: findTag(prop, 'example')?.text?.split('\n'),
+        default: findTag(prop, 'default')?.text
+          ? JSON.parse(findTag(prop, 'default')!.text!)
+          : undefined,
       })
     : hasTypeFlag(type, ts.TypeFlags.Number)
     ? checkLocalized(prop, type, {
@@ -137,9 +140,17 @@ export const ampliencePropertyType = (
         minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
         maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
         examples: findTag(prop, 'example')?.text?.split('\n'),
+        default: findTag(prop, 'default')?.text
+          ? JSON.parse(findTag(prop, 'default')!.text!)
+          : undefined,
       })
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
-    ? checkLocalized(prop, type, { type: 'boolean' })
+    ? checkLocalized(prop, type, {
+        type: 'boolean',
+        default: findTag(prop, 'default')?.text
+          ? JSON.parse(findTag(prop, 'default')!.text!)
+          : undefined,
+      })
     : hasTypeFlag(type, ts.TypeFlags.StringLiteral)
     ? { type: 'string', const: (type as ts.StringLiteralType).value }
     : type.isUnion() && type.types.every((t) => t.isStringLiteral())
