@@ -10,15 +10,15 @@ The GraphQL schema generator takes Typescript files with interfaces as input and
 
 For example, given the following file called `books.ts`.
 ```ts
-type CustomScalar = string & {__scalar?: undefined}
-interface Author {
+export type CustomScalar = string & {__scalar?: undefined}
+export interface Author {
     name: string
     custom: CustomScalar
 }
-interface Chapter {
+export interface Chapter {
     startPage: number
 }
-interface Book {
+export interface Book {
     id: string
     author: Author
     title: string
@@ -27,10 +27,10 @@ interface Book {
     pages: number
     chapters: Chapter[]
 }
-interface Game {
+export interface Game {
     title: string
 }
-type Product = Book | Game
+export type Product = Book | Game
 ```
 
 You can generate the following GraphQL types:

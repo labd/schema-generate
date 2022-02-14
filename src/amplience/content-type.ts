@@ -33,9 +33,13 @@ export const contentTypeSchemaBody = (
   properties: {
     ...objectProperties(type, checker, schemaHost),
   },
-  propertyOrder: type.getProperties().map((n) => n.name),
+  propertyOrder: type
+    .getProperties()
+    .filter((prop) => ['ignoreAmplience'].every((term) => !hasTag(prop, term)))
+    .map((n) => n.name),
   required: type
     .getProperties()
+    .filter((prop) => ['ignoreAmplience'].every((term) => !hasTag(prop, term)))
     .filter((m) => !hasSymbolFlag(m, ts.SymbolFlags.Optional))
     .map((n) => n.name),
 })
@@ -60,11 +64,11 @@ export const hierarchyContentTypeSchemaBody = (
   },
   propertyOrder: type
     .getProperties()
-    .filter((n) => !hasTag(n, 'children'))
+    .filter((prop) => ['children', 'ignoreAmplience'].every((term) => !hasTag(prop, term)))
     .map((n) => n.name),
   required: type
     .getProperties()
-    .filter((m) => !hasTag(m, 'children'))
+    .filter((prop) => ['children', 'ignoreAmplience'].every((term) => !hasTag(prop, term)))
     .filter((m) => !hasSymbolFlag(m, ts.SymbolFlags.Optional))
     .map((n) => n.name),
 })

@@ -3,6 +3,7 @@ export interface Base {
   /**
    * @minLength 2
    * @maxLength 4
+   * @pattern ^/.*$
    * @example
    * one example
    * another example
@@ -24,4 +25,6 @@ export interface Base {
   boolean: boolean
   constString: 'const'
   constArray: ['this', 'is', 'const']
+  /** @ignoreAmplience */
+  ignore: string
 }
