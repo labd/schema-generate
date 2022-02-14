@@ -123,31 +123,34 @@ export const ampliencePropertyType = (
         }
       : inlineObject(type, checker, schemaHost)
     : hasTypeFlag(type, ts.TypeFlags.String)
-    ? checkLocalized(
-        prop,
-        type,
-        checkDefault(prop, {
-          type: 'string',
-          format: findTag(prop, 'format')?.text,
-          minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
-          maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
-          pattern: findTag(prop, 'pattern')?.text,
-          examples: findTag(prop, 'example')?.text?.split('\n'),
-        })
-      )
+    ? checkLocalized(prop, type, {
+        type: 'string',
+        format: findTag(prop, 'format')?.text,
+        minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
+        maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
+        pattern: findTag(prop, 'pattern')?.text,
+        examples: findTag(prop, 'example')?.text?.split('\n'),
+        default: findTag(prop, 'default')?.text
+          ? JSON.parse(findTag(prop, 'default')!.text!)
+          : undefined,
+      })
     : hasTypeFlag(type, ts.TypeFlags.Number)
-    ? checkLocalized(
-        prop,
-        type,
-        checkDefault(prop, {
-          type: hasTag(prop, 'float') ? 'number' : 'integer',
-          minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
-          maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
-          examples: findTag(prop, 'example')?.text?.split('\n'),
-        })
-      )
+    ? checkLocalized(prop, type, {
+        type: hasTag(prop, 'float') ? 'number' : 'integer',
+        minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
+        maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
+        examples: findTag(prop, 'example')?.text?.split('\n'),
+        default: findTag(prop, 'default')?.text
+          ? JSON.parse(findTag(prop, 'default')!.text!)
+          : undefined,
+      })
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
-    ? checkLocalized(prop, type, checkDefault(prop, { type: 'boolean' }))
+    ? checkLocalized(prop, type, {
+        type: 'boolean',
+        default: findTag(prop, 'default')?.text
+          ? JSON.parse(findTag(prop, 'default')!.text!)
+          : undefined,
+      })
     : hasTypeFlag(type, ts.TypeFlags.StringLiteral)
     ? { type: 'string', const: (type as ts.StringLiteralType).value }
     : type.isUnion() && type.types.every((t) => t.isStringLiteral())
@@ -197,11 +200,6 @@ export const checkLocalized = (prop: ts.Symbol, type: ts.Type, result: Amplience
     ? prop.getJsDocTags().length === 1 && hasTypeFlag(type, ts.TypeFlags.String)
       ? refType(AMPLIENCE_TYPE.LOCALIZED.String)
       : localized(result)
-    : result
-
-export const checkDefault = (prop: ts.Symbol, result: AmpliencePropertyType) =>
-  findTag(prop, 'default')?.text
-    ? { ...result, default: JSON.parse(findTag(prop, 'default')!.text!) }
     : result
 
 /**
