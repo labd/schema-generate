@@ -1,6 +1,12 @@
 interface A {
   a: String
 }
+type Z {
+  a: String
+}
 type B implements A {
+  a: String
+}
+type C implements A {
   a: String
 }

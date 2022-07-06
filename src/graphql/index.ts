@@ -7,6 +7,7 @@ import {
   isValue,
   switchArray,
   findTags,
+  uniqueBy,
 } from '../lib/util'
 import ts from 'typescript'
 
@@ -27,6 +28,7 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
   const extendedInterfaces = exportedInterfaces
     .flatMap((i) => i.getBaseTypes())
     .filter(isValue)
+    .filter(uniqueBy((i) => i.symbol.name))
     .map((n) => (n.isClassOrInterface() ? n : undefined))
     .filter(isValue)
 
