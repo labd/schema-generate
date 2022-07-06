@@ -24,6 +24,12 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
     .map((type) => (type.isUnion() ? type : undefined))
     .filter(isValue)
 
+  const extendedInterfaces = exportedInterfaces
+    .flatMap((i) => i.getBaseTypes())
+    .filter(isValue)
+    .map((n) => (n.isClassOrInterface() ? n : undefined))
+    .filter(isValue)
+
   const exportedIntersectionTypes = exportedTypes.filter(isScalarType)
 
   return (
@@ -32,6 +38,7 @@ export const generateGraphqlTypes = (fileNames: string[]) => {
       `scalar AmplienceLocalizedString`,
       ...exportedIntersectionTypes.map(toScalar),
       ...exportedUnionTypes.map(toUnionString),
+      ...extendedInterfaces.map((type) => toTypeString(type, checker, true)),
       ...exportedInterfaces
         .filter((type) => !hasTag(type.symbol, 'ignore'))
         .map((type) => toTypeString(type, checker)),
@@ -66,9 +73,9 @@ const toScalar = (type: ts.IntersectionType) => `scalar ${type.aliasSymbol!.name
  * }
  * ```
  */
-const toTypeString = (type: ts.InterfaceType, checker: ts.TypeChecker) => `type ${
-  type.symbol.name
-}${getDirectives(type.symbol)} {
+const toTypeString = (type: ts.InterfaceType, checker: ts.TypeChecker, isInterface = false) => `${
+  isInterface ? 'interface' : 'type'
+} ${type.symbol.name}${getImplements(type)}${getDirectives(type.symbol)} {
 ${type
   .getProperties()
   .filter((prop) => !hasTag(prop, 'ignore'))
@@ -82,6 +89,14 @@ ${type
   )
   .join('\n')}
 }`
+
+const getImplements = (type: ts.InterfaceType) =>
+  type.getBaseTypes()?.length
+    ? ` implements ${type
+        .getBaseTypes()
+        ?.map((t) => t.symbol.name)
+        .join(', ')}`
+    : ''
 
 const extractScalarsFromType = (type: ts.InterfaceType, checker: ts.TypeChecker) =>
   type.getProperties().flatMap(() =>

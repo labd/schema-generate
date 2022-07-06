@@ -8,12 +8,13 @@ const compare = (name: string) => ({
 
 it.each([
   'basic_types',
-  'union_types',
+  'directives',
   'dummy_types',
   'enum_types',
-  'directives',
+  'interface',
   'localized_types',
   'markdown_types',
+  'union_types',
 ])('generates correct %s', (name) => {
   const { result, expected } = compare(name)
   expect(result).toContain(expected)

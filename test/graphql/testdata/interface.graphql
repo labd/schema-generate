@@ -1,0 +1,6 @@
+interface A {
+  a: String
+}
+type B implements A {
+  a: String
+}
