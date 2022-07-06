@@ -97,7 +97,7 @@ const getImplements = (type: ts.InterfaceType) =>
     ? ` implements ${type
         .getBaseTypes()
         ?.map((t) => t.symbol.name)
-        .join(', ')}`
+        .join(' & ')}`
     : ''
 
 const extractScalarsFromType = (type: ts.InterfaceType, checker: ts.TypeChecker) =>
