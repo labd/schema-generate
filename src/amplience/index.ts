@@ -29,7 +29,7 @@ export const generateAmplienceSchemas = (
         name: paramCase(type.symbol.name),
         contentTypeSchema: contentTypeSchema(type, 'CONTENT_TYPE', config),
         contentTypeSchemaBody: contentTypeSchemaBody(type, checker, config),
-        contentType: contentType(type, findTag(type.symbol, 'icon')?.text, config),
+        contentType: contentType(type, findTag(type.symbol, 'icon'), config),
       })),
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'hierarchy'))
@@ -37,7 +37,7 @@ export const generateAmplienceSchemas = (
         name: paramCase(type.symbol.name),
         contentTypeSchema: contentTypeSchema(type, 'CONTENT_TYPE', config),
         contentTypeSchemaBody: hierarchyContentTypeSchemaBody(type, checker, config),
-        contentType: contentType(type, findTag(type.symbol, 'icon')?.text, config),
+        contentType: contentType(type, findTag(type.symbol, 'icon'), config),
       })),
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'slot'))
@@ -45,7 +45,7 @@ export const generateAmplienceSchemas = (
         name: paramCase(type.symbol.name),
         contentTypeSchema: contentTypeSchema(type, 'SLOT', config),
         contentTypeSchemaBody: contentTypeSchemaBody(type, checker, config),
-        contentType: contentType(type, findTag(type.symbol, 'icon')?.text, config),
+        contentType: contentType(type, findTag(type.symbol, 'icon'), config),
       })),
     ...exportedInterfaces
       .filter((t) => hasTag(t.symbol, 'partial'))

@@ -85,7 +85,7 @@ ${type
     (prop) =>
       `  ${prop.name}: ${toPropertyType(
         prop,
-        checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration),
+        checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration!),
         checker
       )}${getDirectives(prop)}`
   )
@@ -153,6 +153,6 @@ const maybeRequired = (prop: ts.Symbol, type: ts.Type) =>
 
 const getDirectives = (prop: ts.Symbol) =>
   findTags(prop, ['directive', 'format'])
-    .filter((t) => t.name !== 'format' || t.text === 'markdown')
-    .map((t) => ` @${t.text}`)
+    .filter((t) => t.name !== 'format' || t.text?.some((t) => t.text.includes('markdown')))
+    .map((t) => ` @${t.text?.map((t) => t.text).join('')}`)
     .join('')

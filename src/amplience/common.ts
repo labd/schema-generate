@@ -67,13 +67,13 @@ export const objectProperties = (
           title: capitalCase(prop.name),
           description: description(prop, checker),
           ...switchArray<AmpliencePropertyType>(
-            checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration),
+            checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration!),
             checker,
             {
               ifArray: (subType) => ({
                 type: 'array',
-                minItems: maybeToNumber(findTag(prop, 'minItems')?.text),
-                maxItems: maybeToNumber(findTag(prop, 'maxItems')?.text),
+                minItems: maybeToNumber(findTag(prop, 'minItems')),
+                maxItems: maybeToNumber(findTag(prop, 'maxItems')),
                 items: ampliencePropertyType(prop, subType, checker, schemaHost),
               }),
               other: (type) => ampliencePropertyType(prop, type, checker, schemaHost),
@@ -125,31 +125,25 @@ export const ampliencePropertyType = (
     : hasTypeFlag(type, ts.TypeFlags.String)
     ? checkLocalized(prop, type, {
         type: 'string',
-        format: findTag(prop, 'format')?.text,
-        minLength: maybeToNumber(findTag(prop, 'minLength')?.text),
-        maxLength: maybeToNumber(findTag(prop, 'maxLength')?.text),
-        pattern: findTag(prop, 'pattern')?.text,
-        examples: findTag(prop, 'example')?.text?.split('\n'),
-        default: findTag(prop, 'default')?.text
-          ? JSON.parse(findTag(prop, 'default')!.text!)
-          : undefined,
+        format: findTag(prop, 'format'),
+        minLength: maybeToNumber(findTag(prop, 'minLength')),
+        maxLength: maybeToNumber(findTag(prop, 'maxLength')),
+        pattern: findTag(prop, 'pattern'),
+        examples: findTag(prop, 'example')?.split('\n'),
+        default: findTag(prop, 'default') ? JSON.parse(findTag(prop, 'default')!) : undefined,
       })
     : hasTypeFlag(type, ts.TypeFlags.Number)
     ? checkLocalized(prop, type, {
         type: hasTag(prop, 'float') ? 'number' : 'integer',
-        minimum: maybeToNumber(findTag(prop, 'minimum')?.text),
-        maximum: maybeToNumber(findTag(prop, 'maximum')?.text),
-        examples: findTag(prop, 'example')?.text?.split('\n'),
-        default: findTag(prop, 'default')?.text
-          ? JSON.parse(findTag(prop, 'default')!.text!)
-          : undefined,
+        minimum: maybeToNumber(findTag(prop, 'minimum')),
+        maximum: maybeToNumber(findTag(prop, 'maximum')),
+        examples: findTag(prop, 'example')?.split('\n'),
+        default: findTag(prop, 'default') ? JSON.parse(findTag(prop, 'default')!) : undefined,
       })
     : hasTypeFlag(type, ts.TypeFlags.Boolean)
     ? checkLocalized(prop, type, {
         type: 'boolean',
-        default: findTag(prop, 'default')?.text
-          ? JSON.parse(findTag(prop, 'default')!.text!)
-          : undefined,
+        default: findTag(prop, 'default') ? JSON.parse(findTag(prop, 'default')!) : undefined,
       })
     : hasTypeFlag(type, ts.TypeFlags.StringLiteral)
     ? { type: 'string', const: (type as ts.StringLiteralType).value }
@@ -157,7 +151,7 @@ export const ampliencePropertyType = (
     ? checkLocalized(prop, type, {
         type: 'string',
         enum: type.types.map((t) => (t as ts.StringLiteralType).value),
-        examples: findTag(prop, 'example')?.text?.split('\n'),
+        examples: findTag(prop, 'example')?.split('\n'),
       })
     : {}
 

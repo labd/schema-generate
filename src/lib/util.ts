@@ -10,13 +10,17 @@ export const getExportedTypes = (fileNames: string[], program: ts.Program) =>
     .flatMap(program.getTypeChecker().getSymbolAtLocation)
     .filter(isValue)
     .flatMap(program.getTypeChecker().getExportsOfModule)
-    .map((s) => program.getTypeChecker().getTypeAtLocation(s.declarations[0]))
+    .map((s) => program.getTypeChecker().getTypeAtLocation(s.declarations![0]))
 
 export const hasTag = (symbol: ts.Symbol, name: string) =>
   symbol.getJsDocTags().some((t) => t.name === name)
 
 export const findTag = (symbol: ts.Symbol, name: string) =>
-  symbol.getJsDocTags().find((t) => t.name === name)
+  symbol
+    .getJsDocTags()
+    .find((t) => t.name === name)
+    ?.text?.map((t) => t.text)
+    .join('\n')
 
 export const findTags = (symbol: ts.Symbol, names: string[]) =>
   symbol.getJsDocTags().filter((t) => names.includes(t.name))
