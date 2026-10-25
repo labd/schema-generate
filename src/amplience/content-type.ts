@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
-
 import { capitalCase } from 'change-case'
 import ts from 'typescript'
 import { hasSymbolFlag, hasTag } from '../lib/util'

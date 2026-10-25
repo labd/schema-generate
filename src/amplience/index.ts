@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { paramCase } from 'change-case'
 import ts from 'typescript'
 import { findTag, getExportedTypes, hasTag, isValue } from '../lib/util'

@@ -3,7 +3,7 @@ import { Command } from 'commander'
 import fs from 'fs'
 import { generateAmplienceSchemas } from './amplience'
 import { readConfig, writeContentTypeToDir } from './amplience/io'
-import { importContentItems, test } from './amplience-migrate/client'
+import { importContentItems } from './amplience-migrate/client'
 import { generateGraphqlTypes } from './graphql'
 
 const watchIf = <T>(shouldWatch: boolean, files: string[], callback: () => T) =>

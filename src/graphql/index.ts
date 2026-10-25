@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
-
 import ts from 'typescript'
 import {
   findTags,
