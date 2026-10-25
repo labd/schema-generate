@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import fs from 'fs'
-import { generateGraphqlTypes } from './graphql'
 import { Command } from 'commander'
+import fs from 'fs'
 import { generateAmplienceSchemas } from './amplience'
 import { readConfig, writeContentTypeToDir } from './amplience/io'
-import { importContentItems, test } from './amplience-migrate/client'
+import { importContentItems } from './amplience-migrate/client'
+import { generateGraphqlTypes } from './graphql'
 
 const watchIf = <T>(shouldWatch: boolean, files: string[], callback: () => T) =>
   shouldWatch ? files.forEach((file) => fs.watchFile(file, callback)) : callback()
@@ -37,11 +37,8 @@ program
   .action((inputFiles: string[], options) =>
     watchIf(options.watch, inputFiles, () =>
       options.outputDir
-        ? generateAmplienceSchemas(
-            inputFiles,
-            readConfig(options.config)
-          ).forEach((contentTypeJsonFiles) =>
-            writeContentTypeToDir(contentTypeJsonFiles, options.outputDir)
+        ? generateAmplienceSchemas(inputFiles, readConfig(options.config)).forEach(
+            (contentTypeJsonFiles) => writeContentTypeToDir(contentTypeJsonFiles, options.outputDir)
           )
         : console.log(
             JSON.stringify(

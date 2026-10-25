@@ -30,10 +30,9 @@ export const renameProperty = <T extends object, P extends keyof T, PN extends s
     ...value,
     [newName]: value[propName],
     [propName]: undefined,
-  } as { [p in PN]: T[P] } &
-    {
-      [K in Exclude<keyof T, P>]: T[K]
-    })
+  }) as { [p in PN]: T[P] } & {
+    [K in Exclude<keyof T, P>]: T[K]
+  }
 
 export const deleteProperty = <T extends object, P extends keyof T>(
   value: T,
@@ -49,14 +48,13 @@ export const addProperty = <T extends object, P extends string, V>(
   value: T,
   propName: P,
   propValue: (context: T) => V
-) => ({ ...value, [propName]: propValue(value) } as T & { [p in P]: V })
+) => ({ ...value, [propName]: propValue(value) }) as T & { [p in P]: V }
 
 export const transformProperty = <T extends object, P extends keyof T, V>(
   value: T,
   propName: P,
   propValue: (propContext: T[P], context: T) => V
 ) =>
-  ({ ...value, [propName]: propValue(value[propName], value) } as { [p in P]: V } &
-    {
-      [K in Exclude<keyof T, P>]: T[K]
-    })
+  ({ ...value, [propName]: propValue(value[propName], value) }) as { [p in P]: V } & {
+    [K in Exclude<keyof T, P>]: T[K]
+  }

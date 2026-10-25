@@ -1,4 +1,4 @@
-import { AmplienceImage } from '../../../src/amplience'
+import type { AmplienceImage } from '../../../src/amplience'
 
 /**
  * @partial

@@ -25,12 +25,8 @@
           ]
         }
       },
-      "propertyOrder": [
-        "label"
-      ],
-      "required": [
-        "label"
-      ]
+      "propertyOrder": ["label"],
+      "required": ["label"]
     }
   }
 }

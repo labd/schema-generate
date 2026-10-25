@@ -1,4 +1,4 @@
-import ts from 'typescript'
+import type ts from 'typescript'
 
 /**
  * @param fileNames The filenames in the program that we want exports of

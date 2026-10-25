@@ -21,9 +21,7 @@
     "sortBy": [
       {
         "key": "default",
-        "paths": [
-          "/order"
-        ]
+        "paths": ["/order"]
       }
     ]
   },
@@ -42,13 +40,6 @@
       "type": "integer"
     }
   },
-  "propertyOrder": [
-    "title",
-    "description",
-    "order"
-  ],
-  "required": [
-    "title",
-    "order"
-  ]
+  "propertyOrder": ["title", "description", "order"],
+  "required": ["title", "order"]
 }

@@ -1,4 +1,4 @@
 /** @ignore */
 export interface A {
-  a: String
+  a: string
 }

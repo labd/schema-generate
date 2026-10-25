@@ -12,53 +12,32 @@
     "sortBy": [
       {
         "key": "default",
-        "paths": [
-          "/order"
-        ]
+        "paths": ["/order"]
       }
     ]
   },
   "trait:filterable": {
     "filterBy": [
       {
-        "paths": [
-          "/prettyURL"
-        ]
+        "paths": ["/prettyURL"]
       },
       {
-        "paths": [
-          "/categoryCode"
-        ]
+        "paths": ["/categoryCode"]
       },
       {
-        "paths": [
-          "/shortCode"
-        ]
+        "paths": ["/shortCode"]
       },
       {
-        "paths": [
-          "/prettyURL",
-          "/categoryCode"
-        ]
+        "paths": ["/prettyURL", "/categoryCode"]
       },
       {
-        "paths": [
-          "/prettyURL",
-          "/shortCode"
-        ]
+        "paths": ["/prettyURL", "/shortCode"]
       },
       {
-        "paths": [
-          "/categoryCode",
-          "/shortCode"
-        ]
+        "paths": ["/categoryCode", "/shortCode"]
       },
       {
-        "paths": [
-          "/prettyURL",
-          "/categoryCode",
-          "/shortCode"
-        ]
+        "paths": ["/prettyURL", "/categoryCode", "/shortCode"]
       }
     ]
   },
@@ -89,19 +68,6 @@
       "type": "string"
     }
   },
-  "propertyOrder": [
-    "title",
-    "description",
-    "order",
-    "prettyURL",
-    "categoryCode",
-    "shortCode"
-  ],
-  "required": [
-    "title",
-    "order",
-    "prettyURL",
-    "categoryCode",
-    "shortCode"
-  ]
+  "propertyOrder": ["title", "description", "order", "prettyURL", "categoryCode", "shortCode"],
+  "required": ["title", "order", "prettyURL", "categoryCode", "shortCode"]
 }

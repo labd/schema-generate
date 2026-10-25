@@ -1,4 +1,4 @@
-import { ContentReference } from '../../../src/amplience'
+import type { ContentReference } from '../../../src/amplience'
 
 export interface HomePage {
   title: string

@@ -50,23 +50,11 @@
             }
           }
         },
-        "propertyOrder": [
-          "title",
-          "links"
-        ],
-        "required": [
-          "title",
-          "links"
-        ]
+        "propertyOrder": ["title", "links"],
+        "required": ["title", "links"]
       }
     }
   },
-  "propertyOrder": [
-    "usps",
-    "navigation"
-  ],
-  "required": [
-    "usps",
-    "navigation"
-  ]
+  "propertyOrder": ["usps", "navigation"],
+  "required": ["usps", "navigation"]
 }

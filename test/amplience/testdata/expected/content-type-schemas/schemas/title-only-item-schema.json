@@ -15,10 +15,6 @@
       "type": "string"
     }
   },
-  "propertyOrder": [
-    "title"
-  ],
-  "required": [
-    "title"
-  ]
+  "propertyOrder": ["title"],
+  "required": ["title"]
 }

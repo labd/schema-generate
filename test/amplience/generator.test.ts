@@ -1,5 +1,5 @@
-import { generateAmplienceSchemas } from '../../src/amplience'
 import fs from 'fs'
+import { generateAmplienceSchemas } from '../../src/amplience'
 
 const readJson = <T>(path: string) => JSON.parse(fs.readFileSync(path, 'utf-8')) as T
 

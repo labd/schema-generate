@@ -1,9 +1,9 @@
-import { defaultConfig, validateConfig } from './config'
-import { AmplienceContentTypeJsonFiles } from './types'
 import { paramCase } from 'change-case'
 import fs from 'fs'
 import path from 'path'
 import { parse } from 'yaml'
+import { defaultConfig, validateConfig } from './config'
+import type { AmplienceContentTypeJsonFiles } from './types'
 
 export const writeContentTypeToDir = (input: AmplienceContentTypeJsonFiles, outputDir: string) => {
   fs.mkdirSync(`${outputDir}/content-types`, { recursive: true })

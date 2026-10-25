@@ -2,6 +2,7 @@ import { ContentItem, DynamicContent } from 'dc-management-sdk-js'
 import { config } from 'dotenv'
 import fs from 'fs'
 import path from 'path'
+
 config()
 
 const client = new DynamicContent({
