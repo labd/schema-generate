@@ -2,9 +2,15 @@ name: Publish
 on:
   release:
     types: [created]
+permissions:
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # npm trusted publishing (OIDC)
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -14,9 +20,10 @@ jobs:
         with:
           node-version: '22.x'
           package-manager-cache: false
-          registry-url: 'https://registry.npmjs.org'
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - name: Upgrade npm for trusted publishing
+        run: npm i -g npm@^11.6.4
       - run: npm publish ./dist
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

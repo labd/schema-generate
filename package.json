@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/korsvanloon/schema-generate"
+    "url": "git+https://github.com/labd/schema-generate.git"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -49,5 +49,9 @@
     "vite": "^8.3.5",
     "vitest": "^5.0.5"
   },
-  "packageManager": "pnpm@12.15.0"
+  "packageManager": "pnpm@12.15.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }
