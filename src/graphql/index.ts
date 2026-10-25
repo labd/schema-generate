@@ -1,15 +1,16 @@
 /* eslint-disable import/no-named-as-default-member */
+
+import ts from 'typescript'
 import {
+  findTags,
   getExportedTypes,
   hasSymbolFlag,
   hasTag,
   hasTypeFlag,
   isValue,
   switchArray,
-  findTags,
   uniqueBy,
 } from '../lib/util'
-import ts from 'typescript'
 
 export const generateGraphqlTypes = (fileNames: string[]) => {
   const program = ts.createProgram(fileNames, {})
@@ -112,8 +113,8 @@ const extractScalarsFromProp = (type: ts.Type, checker: ts.TypeChecker): ts.Type
   isScalarType(type)
     ? [type]
     : type.isClassOrInterface()
-    ? extractScalarsFromType(type, checker)
-    : []
+      ? extractScalarsFromType(type, checker)
+      : []
 
 /**
  * Converts a TS interface property to a GraphQL property
@@ -128,22 +129,22 @@ const getName = (prop: ts.Symbol, type: ts.Type) =>
   isScalarType(type)
     ? type.aliasSymbol?.name
     : hasTypeFlag(type, ts.TypeFlags.String)
-    ? prop.name === 'id'
-      ? 'ID'
-      : hasTag(prop, 'localized')
-      ? 'AmplienceLocalizedString'
-      : 'String'
-    : hasTypeFlag(type, ts.TypeFlags.Number)
-    ? hasTag(prop, 'float')
-      ? 'Float'
-      : 'Int'
-    : hasTypeFlag(type, ts.TypeFlags.Boolean)
-    ? 'Boolean'
-    : hasTypeFlag(type, ts.TypeFlags.Object) && type.symbol
-    ? type.symbol.name
-    : hasTypeFlag(type, ts.TypeFlags.Union)
-    ? type.aliasSymbol!.name
-    : ''
+      ? prop.name === 'id'
+        ? 'ID'
+        : hasTag(prop, 'localized')
+          ? 'AmplienceLocalizedString'
+          : 'String'
+      : hasTypeFlag(type, ts.TypeFlags.Number)
+        ? hasTag(prop, 'float')
+          ? 'Float'
+          : 'Int'
+        : hasTypeFlag(type, ts.TypeFlags.Boolean)
+          ? 'Boolean'
+          : hasTypeFlag(type, ts.TypeFlags.Object) && type.symbol
+            ? type.symbol.name
+            : hasTypeFlag(type, ts.TypeFlags.Union)
+              ? type.aliasSymbol!.name
+              : ''
 
 const maybeRequired = (prop: ts.Symbol, type: ts.Type) =>
   hasSymbolFlag(prop, ts.SymbolFlags.Optional) ||

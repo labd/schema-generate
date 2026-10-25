@@ -1,8 +1,8 @@
 export interface Z {
-  a?: String
+  a?: string
 }
 interface A {
-  a?: String
+  a?: string
 }
 
 export interface B extends A {}

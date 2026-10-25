@@ -1,13 +1,13 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { paramCase } from 'change-case'
-import { findTag, getExportedTypes, hasTag, isValue } from '../lib/util'
 import ts from 'typescript'
-import { AmplienceContentTypeJsonFiles, GeneratorConfig } from './types'
-import { contentTypeSchema, contentType } from './common'
+import { findTag, getExportedTypes, hasTag, isValue } from '../lib/util'
+import { contentType, contentTypeSchema } from './common'
+import { defaultConfig } from './config'
 import { contentTypeSchemaBody, hierarchyContentTypeSchemaBody } from './content-type'
 import { partialSchema } from './partial'
-import { defaultConfig } from './config'
+import type { AmplienceContentTypeJsonFiles, GeneratorConfig } from './types'
 
 export const generateAmplienceSchemas = (
   fileNames: string[],
@@ -60,7 +60,7 @@ export const generateAmplienceSchemas = (
 /**
  * @amplience_type
  */
-// @ts-ignore
+// @ts-expect-error
 
 export interface ContentReference<TypeOrUnion extends object> {
   contentType: string

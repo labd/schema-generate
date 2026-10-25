@@ -48,16 +48,8 @@
           "type": "boolean"
         }
       },
-      "propertyOrder": [
-        "page",
-        "label",
-        "newTab"
-      ],
-      "required": [
-        "page",
-        "label",
-        "newTab"
-      ]
+      "propertyOrder": ["page", "label", "newTab"],
+      "required": ["page", "label", "newTab"]
     }
   }
 }

@@ -1,22 +1,23 @@
 /* eslint-disable import/no-named-as-default-member */
+
+import { capitalCase, paramCase } from 'change-case'
+import ts from 'typescript'
 import {
+  combinations,
+  findTag,
+  hasSymbolFlag,
+  hasTag,
+  hasTypeFlag,
+  ifNotEmpty,
+  maybeToNumber,
+  switchArray,
+} from '../lib/util'
+import type {
   AmplienceContentType,
   AmplienceContentTypeSettings,
   AmpliencePropertyType,
   GeneratorConfig,
 } from './types'
-import { capitalCase, paramCase } from 'change-case'
-import {
-  maybeToNumber,
-  findTag,
-  hasTypeFlag,
-  hasTag,
-  switchArray,
-  hasSymbolFlag,
-  ifNotEmpty,
-  combinations,
-} from '../lib/util'
-import ts from 'typescript'
 
 export const contentTypeSchema = (
   type: ts.Type,
@@ -105,55 +106,59 @@ export const ampliencePropertyType = (
           ]
         )
     : hasTag(prop, 'link')
-    ? contentLink(type as ts.TypeReference, schemaHost)
-    : hasTypeFlag(type, ts.TypeFlags.Object)
-    ? ['ContentReference'].includes(type.symbol?.name)
-      ? contentReference(type as ts.TypeReference, schemaHost)
-      : type.symbol && hasTag(type.symbol, 'partial')
-      ? refType(definitionUri(type, schemaHost))
-      : type.symbol && hasTag(type.symbol, 'content')
-      ? inlineContentLink(type as ts.TypeReference, schemaHost)
-      : !type.symbol
-      ? {
-          type: 'array',
-          items: { type: 'string' },
-          const: (type as ts.TypeReference).typeArguments
-            ?.filter((t) => t.isStringLiteral())
-            .map((t) => t.isStringLiteral() && t.value),
-        }
-      : inlineObject(type, checker, schemaHost)
-    : hasTypeFlag(type, ts.TypeFlags.String)
-    ? checkLocalized(prop, type, {
-        type: 'string',
-        format: findTag(prop, 'format'),
-        minLength: maybeToNumber(findTag(prop, 'minLength')),
-        maxLength: maybeToNumber(findTag(prop, 'maxLength')),
-        pattern: findTag(prop, 'pattern'),
-        examples: findTag(prop, 'example')?.split('\n'),
-        default: findTag(prop, 'default') ? JSON.parse(findTag(prop, 'default')!) : undefined,
-      })
-    : hasTypeFlag(type, ts.TypeFlags.Number)
-    ? checkLocalized(prop, type, {
-        type: hasTag(prop, 'float') ? 'number' : 'integer',
-        minimum: maybeToNumber(findTag(prop, 'minimum')),
-        maximum: maybeToNumber(findTag(prop, 'maximum')),
-        examples: findTag(prop, 'example')?.split('\n'),
-        default: findTag(prop, 'default') ? JSON.parse(findTag(prop, 'default')!) : undefined,
-      })
-    : hasTypeFlag(type, ts.TypeFlags.Boolean)
-    ? checkLocalized(prop, type, {
-        type: 'boolean',
-        default: findTag(prop, 'default') ? JSON.parse(findTag(prop, 'default')!) : undefined,
-      })
-    : hasTypeFlag(type, ts.TypeFlags.StringLiteral)
-    ? { type: 'string', const: (type as ts.StringLiteralType).value }
-    : type.isUnion() && type.types.every((t) => t.isStringLiteral())
-    ? checkLocalized(prop, type, {
-        type: 'string',
-        enum: type.types.map((t) => (t as ts.StringLiteralType).value),
-        examples: findTag(prop, 'example')?.split('\n'),
-      })
-    : {}
+      ? contentLink(type as ts.TypeReference, schemaHost)
+      : hasTypeFlag(type, ts.TypeFlags.Object)
+        ? ['ContentReference'].includes(type.symbol?.name)
+          ? contentReference(type as ts.TypeReference, schemaHost)
+          : type.symbol && hasTag(type.symbol, 'partial')
+            ? refType(definitionUri(type, schemaHost))
+            : type.symbol && hasTag(type.symbol, 'content')
+              ? inlineContentLink(type as ts.TypeReference, schemaHost)
+              : !type.symbol
+                ? {
+                    type: 'array',
+                    items: { type: 'string' },
+                    const: (type as ts.TypeReference).typeArguments
+                      ?.filter((t) => t.isStringLiteral())
+                      .map((t) => t.isStringLiteral() && t.value),
+                  }
+                : inlineObject(type, checker, schemaHost)
+        : hasTypeFlag(type, ts.TypeFlags.String)
+          ? checkLocalized(prop, type, {
+              type: 'string',
+              format: findTag(prop, 'format'),
+              minLength: maybeToNumber(findTag(prop, 'minLength')),
+              maxLength: maybeToNumber(findTag(prop, 'maxLength')),
+              pattern: findTag(prop, 'pattern'),
+              examples: findTag(prop, 'example')?.split('\n'),
+              default: findTag(prop, 'default') ? JSON.parse(findTag(prop, 'default')!) : undefined,
+            })
+          : hasTypeFlag(type, ts.TypeFlags.Number)
+            ? checkLocalized(prop, type, {
+                type: hasTag(prop, 'float') ? 'number' : 'integer',
+                minimum: maybeToNumber(findTag(prop, 'minimum')),
+                maximum: maybeToNumber(findTag(prop, 'maximum')),
+                examples: findTag(prop, 'example')?.split('\n'),
+                default: findTag(prop, 'default')
+                  ? JSON.parse(findTag(prop, 'default')!)
+                  : undefined,
+              })
+            : hasTypeFlag(type, ts.TypeFlags.Boolean)
+              ? checkLocalized(prop, type, {
+                  type: 'boolean',
+                  default: findTag(prop, 'default')
+                    ? JSON.parse(findTag(prop, 'default')!)
+                    : undefined,
+                })
+              : hasTypeFlag(type, ts.TypeFlags.StringLiteral)
+                ? { type: 'string', const: (type as ts.StringLiteralType).value }
+                : type.isUnion() && type.types.every((t) => t.isStringLiteral())
+                  ? checkLocalized(prop, type, {
+                      type: 'string',
+                      enum: type.types.map((t) => (t as ts.StringLiteralType).value),
+                      examples: findTag(prop, 'example')?.split('\n'),
+                    })
+                  : {}
 
 const contentReference = (type: ts.TypeReference, schemaHost: string) =>
   refType(AMPLIENCE_TYPE.CORE.ContentReference, enumProperties(type.typeArguments![0], schemaHost))

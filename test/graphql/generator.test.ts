@@ -1,5 +1,5 @@
-import { generateGraphqlTypes } from '../../src/graphql'
 import fs from 'fs'
+import { generateGraphqlTypes } from '../../src/graphql'
 
 const compare = (name: string) => ({
   result: generateGraphqlTypes([`./test/graphql/testdata/${name}.ts`]),

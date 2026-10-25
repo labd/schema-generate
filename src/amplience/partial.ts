@@ -1,9 +1,10 @@
 /* eslint-disable import/no-named-as-default-member */
-import { AmplienceContentTypeSchema, GeneratorConfig } from './types'
-import { typeUri, refType, AMPLIENCE_TYPE, objectProperties, description } from './common'
+
 import { capitalCase, paramCase } from 'change-case'
 import ts from 'typescript'
 import { hasSymbolFlag, hasTag } from '../lib/util'
+import { AMPLIENCE_TYPE, description, objectProperties, refType, typeUri } from './common'
+import type { AmplienceContentTypeSchema, GeneratorConfig } from './types'
 
 /**
  * Returns a Amplience ContentType from an interface type.
