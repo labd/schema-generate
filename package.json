@@ -17,7 +17,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "postbuild": "cp package.json dist",
-    "test": "jest",
+    "test": "vitest run",
     "schema-generate": "NODE_PATH=./src node -r ts-node/register src/cli.ts"
   },
   "dependencies": {
@@ -41,12 +41,13 @@
     "@labd/eslint-config": "0.4.0",
     "@typescript-eslint/eslint-plugin": "4.13.0",
     "@typescript-eslint/parser": "4.13.0",
+    "@vitest/coverage-v8": "^5.0.5",
     "babel-loader": "^8.1.0",
     "eslint": "7.16.0",
-    "jest": "^26.6.3",
     "prettier": "^2.3.2",
-    "ts-jest": "^26.4.3",
-    "tslib": "^2.0.3"
+    "tslib": "^2.0.3",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
   },
   "packageManager": "pnpm@12.15.0"
 }
