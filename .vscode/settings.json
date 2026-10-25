@@ -1,17 +1,11 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
-  "eslint.validate": ["typescript"],
-  "eslint.packageManager": "yarn",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "jest.pathToJest": "NODE_ENV=test node_modules/.bin/jest",
-  "eslint.options": {
-    "parserOptions": {
-      "project": ["${workspaceFolder}/tsconfig.json"]
-    }
-  },
   "cSpell.words": ["amplience", "graphql"]
 }

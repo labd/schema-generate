@@ -28,6 +28,11 @@ jobs:
         env:
           CI: true
 
+      - name: Lint
+        run: pnpm biome ci
+        env:
+          CI: true
+
       - name: Test
         run: pnpm test --coverage
         env:

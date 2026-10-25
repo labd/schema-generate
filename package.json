@@ -18,7 +18,10 @@
     "build": "tsc -p tsconfig.json",
     "postbuild": "cp package.json dist",
     "test": "vitest run",
-    "schema-generate": "NODE_PATH=./src node -r ts-node/register src/cli.ts"
+    "schema-generate": "NODE_PATH=./src node -r ts-node/register src/cli.ts",
+    "lint": "biome check",
+    "format": "biome check --fix",
+    "check": "biome check && tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "change-case": "^4.1.2",
@@ -38,13 +41,9 @@
     "@babel/plugin-proposal-decorators": "7.12.12",
     "@babel/preset-env": "7.12.11",
     "@babel/preset-typescript": "7.12.7",
-    "@labd/eslint-config": "0.4.0",
-    "@typescript-eslint/eslint-plugin": "4.13.0",
-    "@typescript-eslint/parser": "4.13.0",
+    "@biomejs/biome": "2.5.15",
     "@vitest/coverage-v8": "^5.0.5",
     "babel-loader": "^8.1.0",
-    "eslint": "7.16.0",
-    "prettier": "^2.3.2",
     "tslib": "^2.0.3",
     "vite": "^8.3.5",
     "vitest": "^5.0.5"
